@@ -1,0 +1,250 @@
+@font-face {
+	font-family: "Comic Neue";
+	src: local("Comic Neue Bold"), url("/fonts/ComicNeue-Bold");
+	font-weight: bold;
+}
+
+:root {
+	font-family: "Atkinson Hyperlegible", sans-serif;
+	font-variant-numeric: slashed-zero;
+	color-scheme: light;
+	--background: #ffffff;
+	--on_background: #000000;
+	--anchor: #0400ff;
+	--on_anchor: #57ffff;
+	--purple: #af75ff;
+	--pink: #ff2ef8;
+	background-color: var(--background);
+	color: var(--on_background);
+}
+
+body {
+	margin: 6pt;
+}
+
+a {
+	color: var(--anchor);
+}
+
+a:focus {
+	font-weight: bold;
+	background-color: var(--anchor);
+	color: var(--on_anchor);
+}
+
+h2 > a, h3 > a, h4 > a, h5 > a, h6 > a {
+	padding-left: 3pt;
+	visibility: hidden;
+}
+
+h2:hover > a, h3:hover > a, h4:hover > a, h5:hover > a, h6:hover > a,
+h2 > a:focus, h3 > a:focus, h4 > a:focus, h5 > a:focus, h6 > a:focus {
+	margin-left: 3pt;
+	visibility: visible;
+}
+
+h1::before, h2::before, h3::before, h4::before, h5::before, h6::before {
+	margin-right: 3pt;
+}
+
+#matrix::before {
+	content: '[m]'
+}
+
+#simplex-chat::before {
+	content: '💠'
+}
+
+#email::before {
+	content: '📧'
+}
+
+#bandcamp::before {
+	content: '🎵'
+}
+
+#fediverse::before {
+	content: '⬠'
+}
+
+code {
+	font-family: "Iosevka", monospace;
+}
+
+#banner {
+	background: linear-gradient(to right bottom, var(--purple) 0%, var(--pink) 80%);
+	background-clip: text;
+}
+
+#banner > span {
+	width: min-content;
+	display: block;
+	font-family: "Comic Neue";
+	line-height: 0.8;
+	font-size: 1.8rem;
+	font-weight: bold;
+	/* All browsers actually support this for some reason */
+	-webkit-text-fill-color: transparent;
+}
+
+#banner > span:nth-child(1) {
+	padding-left: 12pt;
+	transform: rotate(-2deg);
+}
+
+#banner > span:nth-child(2) {
+	transform: rotate(2deg);
+}
+
+header {
+	display: flex;
+	flex-direction: row;
+	gap: 5pt;
+}
+
+header > nav {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	column-gap: 10pt;
+	row-gap: 2pt;
+}
+
+header > nav a {
+	height: min-content;
+}
+
+header > nav a::before {
+	padding-right: 1pt;
+	content: var(--before);
+}
+
+footer {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 3pt;
+	align-items: center;
+	justify-content: center;
+	margin-top: 2rem;
+	border-top: var(--on_background);
+	border-top-style: dashed;
+	border-top-width: 2pt;
+	padding-top: 8pt;
+}
+
+footer > a {
+	height: 30px;
+}
+
+#be_crime_do_gay {
+	/* Rainbow + magenta gradient */
+	background: linear-gradient(to bottom right, rgba(255,0,0,1) 0%, rgba(255,154,0,1) 10%, rgba(208,222,33,1) 20%, rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%, rgba(28,127,238,1) 60%, rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%, rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%);
+	height: min-content;
+	padding: 5pt;
+}
+
+#be_crime_do_gay span, #be_crime_do_gay a {
+	background-color: var(--background);
+	padding: 1pt;
+}
+
+#be_crime_do_gay > nav {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+#be_crime_do_gay > nav > a:nth-child(1)::before {
+	content: '←';
+	padding-right: 1pt;
+}
+
+#be_crime_do_gay > nav > a:nth-child(2)::after {
+	content: '→';
+	padding-left: 1pt;
+}
+
+#th50_kb_club {
+	text-decoration: none;
+	display: flex;
+	flex-direction: row;
+	font-family: monospace;
+	justify-content: center;
+	align-items: center;
+}
+
+#th50_kb_club > div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	align-self: stretch;
+	padding-left: 6pt;
+	padding-right: 6pt;
+}
+
+#th50_kb_club > div:nth-child(1) {
+	font-size: 0.85rem;
+	line-height: 0.8;
+	background-color: white;
+	color: #336611;
+}
+
+#th50_kb_club > div:nth-child(2) {
+	font-weight: bold;
+	font-size: 1.4rem;
+	background-color: #77cc44;
+	color: black;
+}
+
+#fh12_kb_club {
+	--green: #4caf50;
+	--black: #1a1a1a;
+	text-decoration: none;
+	color: var(--black);
+	font-weight: bold;
+	font-family: sans-serif;
+	display: flex;
+	flex-direction: row;
+}
+
+#fh12_kb_club > div {
+	border: 2pt solid var(--green);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-left: 5pt;
+	padding-right: 5pt;
+}
+
+#fh12_kb_club > div:nth-child(1) {
+	background: #c8e6c9;
+}
+
+#fh12_kb_club > div:nth-child(2) {
+	background: var(--green);
+	color: var(--black);
+}
+
+#one_mb_club {
+	font-weight: bold;
+	background: #cd214f;
+	color: white;
+	padding-left: 4pt;
+	padding-right: 4pt;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		color-scheme: dark;
+		--background: #000000;
+		--on_background: #ffffff;
+		--anchor: #fbff00;
+		--on_anchor: #a80000;
+		--purple: #b37cff;
+		--pink: #ff70fa;
+	}
+}

@@ -1,0 +1,62 @@
+use maud::{
+    html,
+    Markup
+};
+
+struct MenuEntry {
+    href: String,
+    name: String,
+    before: Option<char>
+}
+
+struct Menu {
+    entries: Vec<MenuEntry>
+}
+
+impl Menu {
+    fn new() -> Self {
+        Menu {
+            entries: Vec::new(),
+        }
+    }
+
+    fn add_entry(&mut self, href: &str, name: &str, before: Option<char>) {
+        self.entries.push(
+            MenuEntry { href: href.to_string(), name: name.to_string(), before }
+        );
+    }
+}
+
+pub async fn header() -> Markup {
+    let mut menu = Menu::new();
+    menu.add_entry("/", "Home", Some('🏠'));
+    /*menu.add_entry("/blog", "Blog", Some('📜'));
+    menu.add_entry("/art", "Art portfolio", Some('🌠'));*/
+    menu.add_entry("/static/find-billy", "Find Billy!", Some('🤖'));
+    menu.add_entry("https://kaufkauflist.annaaurora.eu", "kaufkauflist", Some('🛒'));
+    menu.add_entry("/contact", "Contact", Some('👋'));
+    menu.add_entry("/license", "License", Some('©'));
+    menu.add_entry("https://codeberg.org/annaaurora/annaaurora.eu", "Source code", Some('📦'));
+    /*menu.add_entry("/atom.xml", "Atom feed", None);
+    menu.add_entry("/feed.json", "JSON feed", None);*/
+
+    html! {
+        header {
+            div #banner {
+                span { "Anna" } span { "Aurora" }
+            }
+            nav {
+                @for entry in menu.entries {
+                    @match entry.before {
+                        Some(content) => {
+                            a href=(entry.href) style=(format!("--before: '{}';", content)) { (entry.name) }
+                        },
+                        None => {
+                            a href=(entry.href) { (entry.name) }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
