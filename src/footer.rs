@@ -8,8 +8,8 @@ pub async fn footer() -> Markup {
     let ring = reqwest::get("https://artemislena.eu/services/downloads/beCrimeDoGay.json").await.unwrap()
         .json::<Vec<String>>().await.unwrap();
     let self_index = ring.iter().position(|x| x == self_url).unwrap();
-    let mut prev_url: &str;
-    let mut next_url: &str;
+    let prev_url: &str;
+    let next_url: &str;
     if self_index + 1 == ring.len() {
         next_url = &ring[0];
         prev_url = &ring[self_index - 1];
