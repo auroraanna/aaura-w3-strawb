@@ -3,9 +3,12 @@ mod header;
 mod footer;
 mod markdown;
 
-use std::path::{
-    Path,
-    PathBuf
+use std::{
+    env,
+    path::{
+        Path,
+        PathBuf
+    }
 };
 use maud::{
     html,
@@ -38,6 +41,16 @@ fn comic_neue_bold() -> PathBuf {
 
 #[tokio::main]
 async fn main() {
+    let bind_address_key = "ANNAAURORA_EU_CRANBERRY_BIND_ADDRESS";
+    let bind_address = match env::var(bind_address_key) {
+        Ok(address) => address,
+        Err(e) => {
+            let address = "localhost:60021".to_string();
+            eprintln!("{}: {}, using {} instead", bind_address_key, e, address);
+            address
+        }
+    };
+
     let app = Router::new()
         .route("/", get(index))
         .nest_service("/fonts/ComicNeue-Bold", ServeFile::new(&comic_neue_bold()))
@@ -45,6 +58,6 @@ async fn main() {
         .route("/license", get(page_from_md(Path::new("./markdown/license.md")).await))
         .route("/contact", get(page_from_md(Path::new("./markdown/contact.md")).await));
 
-    let listener = tokio::net::TcpListener::bind("localhost:60021").await.unwrap();
+    let listener = tokio::net::TcpListener::bind(bind_address).await.unwrap();
     axum::serve(listener, app.into_make_service()).await.unwrap();
 }
