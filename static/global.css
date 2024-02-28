@@ -8,8 +8,9 @@
 	font-family: "Atkinson Hyperlegible", sans-serif;
 	font-variant-numeric: slashed-zero;
 	color-scheme: light;
-	--background: #ffffff;
-	--on_background: #000000;
+	--background: white;
+	--alt_background: #e5e5e5;
+	--on_background: black;
 	--anchor: #0400ff;
 	--on_anchor: #57ffff;
 	--purple: #af75ff;
@@ -242,11 +243,37 @@ footer > a {
 	align-items: center;
 }
 
+table {
+	border-collapse: collapse;
+	border-style: solid;
+	border-width: 1pt;
+	border-color: var(--on_background);
+}
+
+thead, tfoot {
+	background-color: var(--pink);
+	color: var(--background);
+	font-size: large;
+}
+
+th, td {
+	border-style: solid;
+	border-width: 1pt;
+	border-color: var(--on_background);
+	padding: 4pt;
+	text-align: end;
+}
+
+tbody > tr:nth-of-type(even) {
+	background-color: var(--alt_background);
+}
+
 @media (prefers-color-scheme: dark) {
 	:root {
 		color-scheme: dark;
-		--background: #000000;
-		--on_background: #ffffff;
+		--background: black;
+		--alt_background: #262626;
+		--on_background: white;
 		--anchor: #fbff00;
 		--on_anchor: #a80000;
 		--purple: #b37cff;

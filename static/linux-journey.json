@@ -1,0 +1,72 @@
+[
+	{
+		"date_installed": {
+			"datetime": "2020-05-15",
+			"approximate": true
+		},
+		"distro": {
+			"name": "PopOS!",
+			"website_url": "https://pop.system76.com/"
+		}
+	},
+	{
+		"date_installed": {
+			"datetime": "2020-06-15",
+			"approximate": true
+		},
+		"distro": {
+			"name": "Linux Mint",
+			"website_url": "https://linuxmint.com/"
+		}
+	},
+	{
+		"date_installed": {
+			"datetime": "2020-07-15",
+			"approximate": true
+		},
+		"distro": {
+			"name": "Manjaro",
+			"website_url": "https://manjaro.org/"
+		}
+	},
+	{
+		"date_installed": {
+			"datetime": "2020-09-15",
+			"approximate": true
+		},
+		"distro": {
+			"name": "Arch Linux",
+			"website_url": "https://archlinux.org/"
+		}
+	},
+	{
+		"date_installed": {
+			"datetime": "2021-04-28",
+			"approximate": false
+		},
+		"distro": {
+			"name": "Bedrock Linux",
+			"website_url": "https://bedrocklinux.org/"
+		}
+	},
+	{
+		"date_installed": {
+			"datetime": "2021-05-15",
+			"approximate": true
+		},
+		"distro": {
+			"name": "Arch Linux",
+			"website_url": "https://archlinux.org/"
+		}
+	},
+	{
+		"date_installed": {
+			"datetime": "2021-05-24",
+			"approximate": false
+		},
+		"distro": {
+			"name": "NixOS",
+			"website_url": "https://nixos.org/"
+		}
+	}
+]

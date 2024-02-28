@@ -35,6 +35,7 @@ pub async fn header() -> Markup {
     menu.add_entry("/static/find-billy", "Find Billy!", Some('🤖'));
     menu.add_entry("https://kaufkauflist.annaaurora.eu", "kaufkauflist", Some('🛒'));
     menu.add_entry("/contact", "Contact", Some('👋'));
+    menu.add_entry("/linux-journey", "Linux journey", Some('🐧'));
     menu.add_entry("/license", "License", Some('©'));
     menu.add_entry("https://codeberg.org/annaaurora/annaaurora.eu", "Source code", Some('📦'));
     /*menu.add_entry("/atom.xml", "Atom feed", None);
