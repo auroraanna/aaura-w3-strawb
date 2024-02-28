@@ -22,6 +22,11 @@ body {
 	margin: 6pt;
 }
 
+main {
+	/* for long cryptographic fingerprints or keys that won't break on their own */
+	overflow-wrap: anywhere;
+}
+
 a {
 	color: var(--anchor);
 }
