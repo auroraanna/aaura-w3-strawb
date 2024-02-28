@@ -20,12 +20,18 @@
 }
 
 body {
-	margin: 6pt;
+	box-sizing: border-box;
+	height: 100vh;
+	margin: 0rem;
+	padding: 6pt;
+	display: flex;
+	flex-direction: column;
 }
 
 main {
 	/* for long cryptographic fingerprints or keys that won't break on their own */
 	overflow-wrap: anywhere;
+	flex-grow: 1;
 }
 
 a {
