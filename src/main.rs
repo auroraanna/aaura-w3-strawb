@@ -32,7 +32,8 @@ use crate::{
 
 struct EnvVars {
     bind_address: String,
-    bcdg_json: Option<PathBuf>
+    bcdg_json: Option<PathBuf>,
+    static_dir: PathBuf
 }
 
 impl EnvVars {
@@ -56,7 +57,16 @@ impl EnvVars {
             }
         };
 
-        Self { bind_address, bcdg_json }
+        let static_dir_key = "ANNAAURORA_EU_CRANBERRY_STATIC_DIR";
+        let static_dir = match env::var(static_dir_key) {
+            Ok(p) => Path::new(&p).to_owned(),
+            Err(e) => {
+                eprintln!("{}, {}, using ./static instead", static_dir_key, e);
+                Path::new("./static").to_owned()
+            }
+        };
+
+        Self { bind_address, bcdg_json, static_dir }
     }
 }
 
@@ -80,7 +90,7 @@ async fn main() {
     let app = Router::new()
         .route("/", get(index))
         .nest_service("/fonts/ComicNeue-Bold", ServeFile::new(&comic_neue_bold()))
-        .nest_service("/static/", ServeDir::new("static"))
+        .nest_service("/static/", ServeDir::new(&ENV_VARS.static_dir))
         .route("/license", get(page_from_md(Path::new("./markdown/license.md")).await))
         .route("/contact", get(page_from_md(Path::new("./markdown/contact.md")).await))
         .route("/linux-journey", get(linux_journey().await));
