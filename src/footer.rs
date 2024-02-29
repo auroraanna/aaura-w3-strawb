@@ -2,7 +2,10 @@ use maud::{
     html,
     Markup
 };
-use std::fs::read_to_string;
+use std::{
+    fs::read_to_string,
+    env::current_exe
+};
 use crate::ENV_VARS;
 
 async fn ring() -> Vec<String> {
@@ -59,6 +62,11 @@ pub async fn footer() -> Markup {
                 }
             }
             a #one_mb_club href="https://1mb.club/" { "1MB Club" }
+            p {
+                "You were served by "
+                code { (format!("{}", current_exe().unwrap().display())) }
+                "."
+            }
         }
     }
 }
