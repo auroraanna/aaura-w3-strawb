@@ -93,7 +93,7 @@ async fn main() {
         .nest_service("/static/", ServeDir::new(&ENV_VARS.static_dir))
         .route("/license", get(page_from_md(Path::new("./markdown/license.md")).await))
         .route("/contact", get(page_from_md(Path::new("./markdown/contact.md")).await))
-        .route("/linux-journey", get(linux_journey().await));
+        .route("/linux-journey", get(linux_journey));
 
     let listener = tokio::net::TcpListener::bind(&ENV_VARS.bind_address).await.unwrap();
     axum::serve(listener, app.into_make_service()).await.unwrap();
