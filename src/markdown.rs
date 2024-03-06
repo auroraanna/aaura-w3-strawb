@@ -18,8 +18,13 @@ use maud::{
 use slug::slugify;
 use crate::base::{
     base,
-    Frontmatter
+    MyFrontmatter
 };
+use axum::{
+    extract,
+    body::Body
+};
+use http::status::StatusCode;
 
 pub async fn page_from_md(md_path: &Path) -> Markup {
     let md = read_to_string(md_path).unwrap();
@@ -54,15 +59,30 @@ pub async fn page_from_md(md_path: &Path) -> Markup {
         }
     );
 
-    let mut extractor = FrontmatterExtractor::new(parser);
+    let extractor = FrontmatterExtractor::new(parser);
+
+    let code_block = extractor.frontmatter.as_ref().unwrap().code_block.as_ref().unwrap();
+    let my_frontmatter: MyFrontmatter = toml::from_str(&code_block.source).unwrap();
+    eprintln!("Markdown page title: {}", my_frontmatter.title);
 
     let mut html_output = String::new();
-    pulldown_cmark::html::push_html(&mut html_output, &mut extractor);
-    let code_block = extractor.frontmatter.unwrap().code_block.unwrap();
-    let frontmatter: Frontmatter = toml::from_str(&code_block.source).unwrap();
-    eprintln!("{}", frontmatter.title);
+    pulldown_cmark::html::push_html(&mut html_output, extractor);
 
-    base(Some(frontmatter), html! {
+    base(Some(my_frontmatter), html! {
         (PreEscaped(html_output))
     }).await
+}
+
+use axum_macros::debug_handler;
+
+#[debug_handler]
+pub async fn handle_md(extract::Path(filename): extract::Path<String>) -> Result<Body, StatusCode> {
+    eprintln!("{}", filename);
+
+    let md_path = Path::new(&format!("markdown/{}.md", filename)).to_owned();
+    if !&md_path.exists() {
+        return Err(StatusCode::NOT_FOUND);
+    }
+
+    Ok(page_from_md(&md_path).await.into_string().into())
 }

@@ -13,7 +13,7 @@ use std::{
 use serde::Deserialize;
 use crate::base::{
     base,
-    Frontmatter
+    MyFrontmatter
 };
 
 #[derive(Deserialize)]
@@ -39,7 +39,7 @@ pub async fn linux_journey() -> Markup {
     let journey: Vec<JourneyEntry> = serde_json::from_str(&journey_json_string).unwrap();
 
     base(
-        Some(Frontmatter {
+        Some(MyFrontmatter {
             title: "Linux journey".to_string(),
             date_published: None
         }),

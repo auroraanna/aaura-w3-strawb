@@ -26,7 +26,7 @@ use axum::{
 };
 use crate::{
     base::base,
-    markdown::page_from_md,
+    markdown::handle_md,
     linux_journey::linux_journey
 };
 
@@ -91,9 +91,8 @@ async fn main() {
         .route("/", get(index))
         .nest_service("/fonts/ComicNeue-Bold", ServeFile::new(&comic_neue_bold()))
         .nest_service("/static/", ServeDir::new(&ENV_VARS.static_dir))
-        .route("/license", get(page_from_md(Path::new("./markdown/license.md")).await))
-        .route("/contact", get(page_from_md(Path::new("./markdown/contact.md")).await))
-        .route("/linux-journey", get(linux_journey));
+        .route("/linux-journey", get(linux_journey))
+        .route("/*filename", get(handle_md));
 
     let listener = tokio::net::TcpListener::bind(&ENV_VARS.bind_address).await.unwrap();
     axum::serve(listener, app.into_make_service()).await.unwrap();

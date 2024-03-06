@@ -14,12 +14,12 @@ use crate::{
 };
 
 #[derive(Deserialize)]
-pub struct Frontmatter {
+pub struct MyFrontmatter {
     pub title: String,
     pub date_published: Option<DateTime<Utc>>
 }
 
-pub async fn base(frontmatter: Option<Frontmatter>, content: Markup) -> Markup {
+pub async fn base(frontmatter: Option<MyFrontmatter>, content: Markup) -> Markup {
     html! {
         (DOCTYPE)
         html lang="en" {
