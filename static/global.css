@@ -27,6 +27,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	gap: 12pt;
 }
 
 main {
@@ -120,7 +121,6 @@ footer {
 	gap: 3pt;
 	align-items: center;
 	justify-content: center;
-	margin-top: 2rem;
 	border-top: var(--on_background);
 	border-top-style: dashed;
 	border-top-width: 2pt;
