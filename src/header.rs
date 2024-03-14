@@ -30,7 +30,7 @@ impl Menu {
 pub async fn header() -> Markup {
     let mut menu = Menu::new();
     menu.add_entry("/", "Home", Some('🏠'));
-    /*menu.add_entry("/blog", "Blog", Some('📜'));
+    menu.add_entry("/blog/", "Blog", Some('📜'));
     menu.add_entry("/art", "Art portfolio", Some('🌠'));*/
     menu.add_entry("/static/find-billy", "Find Billy!", Some('🤖'));
     menu.add_entry("https://kaufkauflist.annaaurora.eu", "kaufkauflist", Some('🛒'));
