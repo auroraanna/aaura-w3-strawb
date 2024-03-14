@@ -136,6 +136,7 @@ footer > a {
 	background: linear-gradient(to bottom right, rgba(255,0,0,1) 0%, rgba(255,154,0,1) 10%, rgba(208,222,33,1) 20%, rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%, rgba(28,127,238,1) 60%, rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%, rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%);
 	height: min-content;
 	padding: 5pt;
+	font-family: "Comic Neue";
 }
 
 #be_crime_do_gay span, #be_crime_do_gay a {
@@ -256,6 +257,10 @@ tbody > tr:nth-of-type(even) {
 	background-color: var(--alt_background);
 }
 
+img {
+	width: 100%;
+}
+
 .md_dir_list {
 	display: grid;
 }
@@ -265,6 +270,75 @@ tbody > tr:nth-of-type(even) {
 	grid-template-columns: subgrid;
 	grid-column: 1 / 3;
 	column-gap: 6pt;
+}
+
+#portrait {
+	display: flex;
+	justify-content: center;
+}
+
+#portrait > img {
+	max-width: 40rem;
+	background: var(--alt_background);
+}
+
+rt {
+	font-size: 70%;
+	background-color: var(--alt_background);
+	color: var(--color);
+}
+
+.pansexual {
+	background: linear-gradient(to bottom, #ff1b8d 33.33%, #ffd900 33.33%, #ffd900 66.66%, #1bb3ff 66.66%);
+	color: black;
+	padding-left: 1pt;
+	padding-right: 1pt;
+	font-family: "Comic Neue";
+}
+
+.trans {
+	background: linear-gradient(to bottom, #5bcffa 20%, #f5abb9 20%, #f5abb9 40%, white 40%, white 60%, #f5abb9 60%, #f5abb9 80%, #5bcffa 80%);
+	color: black;
+	padding-left: 1pt;
+	padding-right: 1pt;
+	font-family: "Comic Neue";
+}
+
+.bio {
+	font-family: monospace;
+	font-size: 1rem;
+}
+
+@counter-style pwetty {
+  system: cyclic;
+	symbols: 🌷 🪷 🌸 🌺;
+	suffix: " ";
+}
+
+ul.bio {
+	list-style: pwetty;
+	padding-inline-start: 27px;
+}
+
+ul.bio li:nth-child(1) {
+	list-style-type: "👩🏻‍💻 ";
+}
+
+ul.bio li:nth-child(2) {
+	list-style-type: "❄️ ";
+}
+
+ul.bio li:nth-child(6) {
+	list-style-type: "🎹 ";
+}
+
+#shark {
+	display: flex;
+	justify-content: center;
+}
+
+#shark div {
+	font-family: "Comic Neue";
 }
 
 @media (prefers-color-scheme: dark) {

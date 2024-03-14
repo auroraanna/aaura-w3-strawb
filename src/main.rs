@@ -81,7 +81,39 @@ lazy_static::lazy_static! {
 }
 
 async fn index() -> Markup {
-    base(None, html! { }).await
+    base(
+        None,
+        html! { 
+            div #portrait {
+                img src="/static/portrait-srgb-lossier-downscaled.jpg" alt="A photo of showing Anna Aurora outdoors from the top to her sholders. She is wearing fox ears, a choker and a grey tshirt. She is holding her right hand up to her shoulder in joy. She has her eyes closed and is smiling. The background contains the sky, mossy walls and trees." {}
+            }
+
+            ul .bio {
+                li { "likes programming in Rust, Javascript" }
+                li { "using NixOS and maintainer for nixpkgs" }
+                li { "certified kittyfoxgirl​, likes cuddling, will hug a Blåhaj and hide her face with it sometimes" }
+                li {
+                    "polyamorous "
+                    ruby {
+                        span .pansexual { "\"gay\"" }
+                        rp { "(" }
+                        rt { "pansexual" }
+                        rp { ")" }
+                    }
+                    " "
+                    span .trans { "trans" }
+                    " girl"
+                }
+                li { "does 3d art and drawing" }
+                li { "experimenting with music with LMMS and a MIDI keyboard (need to repair)" }
+                li { "interested in converting some of her devices to USB-C and designing her own hardware" }
+            }
+
+            div #shark { 
+                div { "blå 🦈 🦈 haj" }
+            }
+        }
+    ).await
 }
 
 fn comic_neue_bold() -> PathBuf {
