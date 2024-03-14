@@ -86,28 +86,7 @@ code {
 }
 
 #banner {
-	background: linear-gradient(to right bottom, var(--purple) 0%, var(--pink) 80%);
-	background-clip: text;
-}
-
-#banner > span {
-	width: min-content;
-	display: block;
-	font-family: "Comic Neue";
-	line-height: 0.8;
-	font-size: 1.8rem;
-	font-weight: bold;
-	/* All browsers actually support this for some reason */
-	-webkit-text-fill-color: transparent;
-}
-
-#banner > span:nth-child(1) {
-	padding-left: 12pt;
-	transform: rotate(-2deg);
-}
-
-#banner > span:nth-child(2) {
-	transform: rotate(2deg);
+	width: 84px;
 }
 
 header {
