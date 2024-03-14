@@ -37,6 +37,7 @@ pub async fn base(frontmatter: Option<MyFrontmatter>, content: Markup) -> Markup
                 }
                 meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5";
                 link rel="stylesheet" href="/static/global.css";
+                link rel="icon" type="image/png" sizes="36x30" href="/static/favicon.png";
             }
             body {
                 (header().await)
