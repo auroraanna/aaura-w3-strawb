@@ -26,7 +26,13 @@ use axum::{
 };
 use crate::{
     base::base,
-    markdown::handle_md,
+    markdown::{
+        MAUD_VERSION,
+        MD_ROOT,
+        handle_top_lvl_md_page,
+        handle_sub_lvl_md_page,
+        md_page_list
+    },
     linux_journey::linux_journey
 };
 
@@ -87,12 +93,17 @@ fn comic_neue_bold() -> PathBuf {
 
 #[tokio::main]
 async fn main() {
+    lazy_static::initialize(&ENV_VARS);
+    lazy_static::initialize(&MD_ROOT);
+
     let app = Router::new()
         .route("/", get(index))
         .nest_service("/fonts/ComicNeue-Bold", ServeFile::new(&comic_neue_bold()))
         .nest_service("/static/", ServeDir::new(&ENV_VARS.static_dir))
         .route("/linux-journey/", get(linux_journey))
-        .route("/*filename", get(handle_md));
+        .route("/blog/", get(md_page_list("blog", "Blog").await))
+        .route("/:md_page/", get(handle_top_lvl_md_page))
+        .route("/:md_dir/:md_page/", get(handle_sub_lvl_md_page))
 
     let listener = tokio::net::TcpListener::bind(&ENV_VARS.bind_address).await.unwrap();
     axum::serve(listener, app.into_make_service()).await.unwrap();

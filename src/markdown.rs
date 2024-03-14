@@ -1,6 +1,10 @@
 use std::{
+    collections::HashMap,
+    fs::{
+        read_dir,
+        read_to_string
+    }, 
     path::Path,
-    fs::read_to_string
 };
 use pulldown_cmark::{
     Parser,
@@ -22,10 +26,23 @@ use crate::base::{
 };
 use axum::{
     extract,
-    body::Body
+    body::Body,
+    response::{
+        IntoResponse,
+        AppendHeaders
+    }
 };
-use http::status::StatusCode;
+use http::{
+    status::StatusCode,
+    header::CONTENT_TYPE
+};
+use chrono::{
+    DateTime,
+    Utc,
+};
+use axum_macros::debug_handler;
 
+#[derive(Debug, Clone)]
 struct MdPage {
     frontmatter: MyFrontmatter,
     html: String
@@ -85,25 +102,130 @@ impl MdPage {
     }
 }
 
-use axum_macros::debug_handler;
+pub struct MdRoot {
+    sub_dirs: HashMap<String, HashMap<String, MdPage>>,
+    pages: HashMap<String, MdPage>,
+    latest_date: DateTime<Utc>
+}
+
+impl MdRoot {
+    fn new() -> Self {
+        let mut md_root = MdRoot {
+            sub_dirs: HashMap::new(),
+            pages: HashMap::new(),
+            latest_date: DateTime::default(),
+        };
+
+        for entry in read_dir("markdown").unwrap() {
+            let entry = entry.unwrap();
+            let path = entry.path();
+            dbg!(&path);
+            if path.is_dir() {
+                let sub_dir_name = path.file_name().unwrap();
+                dbg!(sub_dir_name);
+                let mut sub_dir_pages: HashMap<String, MdPage> = HashMap::new();
+                for page in read_dir(&path).unwrap() {
+                    let page = page.unwrap();
+                    dbg!(page.path());
+                    let md_page = if page.path().is_dir() {
+                        MdPage::new(&page.path().join("index.md"))          
+                    } else {
+                        MdPage::new(&page.path())       
+                    };
+                    sub_dir_pages.insert(
+                        page.path().file_stem().unwrap().to_str().unwrap().to_owned(), 
+                        md_page
+                    );
+                }
+                md_root.sub_dirs.insert(sub_dir_name.to_str().unwrap().to_owned(), sub_dir_pages);
+            } else {
+                md_root.pages.insert(
+                    path.file_stem().unwrap().to_str().unwrap().to_owned(),
+                    MdPage::new(&path)
+                );
+            }
+        }
+
+        eprintln!("{}", md_root.pages.get("contact").unwrap().frontmatter.title);
+        eprintln!("{}", md_root.sub_dirs.get("blog").unwrap().get("i-bought-a-thinkpad").unwrap().frontmatter.title);
+        eprintln!("{}", md_root.sub_dirs.get("blog").unwrap().get("starship-velociraptor-and-amazing-album").unwrap().frontmatter.title);
+
+        let mut latest_date: DateTime<Utc> = DateTime::UNIX_EPOCH;
+        for (_md_dir_name, md_dir) in md_root.sub_dirs.iter() {
+            for (_md_page_name, md_page) in md_dir.iter() {
+                if md_page.frontmatter.date_published.unwrap() > latest_date {
+                    latest_date = md_page.frontmatter.date_published.unwrap();
+                }
+            }
+        }
+        md_root.latest_date = latest_date;
+
+        md_root
+    }
+}
+
+lazy_static::lazy_static! {
+    pub static ref MD_ROOT: MdRoot = MdRoot::new();
+}
 
 #[debug_handler]
-pub async fn handle_md(extract::Path(query_path): extract::Path<String>) -> Result<Body, StatusCode> {
-    dbg!(&query_path);
-    let stripped_query_path = query_path.strip_suffix("/").unwrap();
-    let path = if Path::new(&("markdown/".to_owned() + stripped_query_path + ".md")).exists() {
-        stripped_query_path.to_owned()
-    } else {
-        query_path + "index"
-    };
-    dbg!(&path);
-    let internal_md_path = Path::new(&format!("markdown/{}.md", path)).to_owned();
-    if !&internal_md_path.exists() {
-        return Err(StatusCode::NOT_FOUND);
-    }
+pub async fn handle_top_lvl_md_page(
+    extract::Path(md_page): extract::Path<String>
+) -> impl IntoResponse {
+    eprintln!("handle_top_lvl_md_page");
+    dbg!(&md_page);
 
-    let md_page = MdPage::new(&internal_md_path);
-    Ok(base(Some(md_page.frontmatter), html! {
-        (PreEscaped(md_page.html))
-    }).await.into_string().into())
+    let md_page = MD_ROOT.pages
+        .get(&md_page).unwrap().clone();
+
+    return (
+        StatusCode::OK,
+        Body::new(
+            base(
+                Some(md_page.frontmatter),
+                html! { (PreEscaped(md_page.html)) }
+            ).await.into_string()
+        )
+    );
+}
+
+#[debug_handler]
+pub async fn handle_sub_lvl_md_page(
+    extract::Path((md_dir, md_page)): extract::Path<(String, String)>
+) -> impl IntoResponse {
+    eprintln!("handle_sub_lvl_md_page");
+    dbg!(&md_page);
+
+    let md_page = MD_ROOT.sub_dirs.get(&md_dir).unwrap()
+        .get(&md_page).unwrap().clone();
+
+
+    return (
+        StatusCode::OK,
+        Body::new(
+            base(
+                Some(md_page.frontmatter),
+                html! { (PreEscaped(md_page.html)) }
+            ).await.into_string()
+        )
+    );
+}
+
+pub async fn md_page_list(md_dir: &str, title: &str) -> Markup {
+    base(Some(MyFrontmatter {
+        title: title.to_string(),
+        date_published: None
+    }), html! {
+        ol .md_dir_list {
+            @for (key, val) in MD_ROOT.sub_dirs.get(md_dir).unwrap().iter() {
+                li {
+                    @let formatted_date = val.frontmatter.date_published.unwrap().format("%Y-%m-%d");
+                    time datetime=(formatted_date) {
+                        (formatted_date)
+                    }
+                    a href=(key) { (val.frontmatter.title) }
+                }
+            }
+        }
+    }).await
 }
