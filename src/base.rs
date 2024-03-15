@@ -17,7 +17,8 @@ use crate::{
 pub struct MyFrontmatter {
     pub title: String,
     pub date_published: Option<DateTime<Utc>>,
-    pub description: Option<String>
+    pub description: Option<String>,
+    pub keywords: Option<Vec<String>>
 }
 
 pub async fn base(frontmatter: Option<MyFrontmatter>, content: Markup) -> Markup {
@@ -31,11 +32,24 @@ pub async fn base(frontmatter: Option<MyFrontmatter>, content: Markup) -> Markup
                 @match frontmatter {
                     Some(ref fm) => {
                         title { (format!("Anna Aurora's website - {}", fm.title)) }
+                        @match &fm.description {
+                            Some(desc) => {
+                                meta name="description" content=(desc);
+                            },
+                            None => {}
+                        }
+                        @match &fm.keywords {
+                            Some(keyw) => {
+                                meta name="keywords" content=(keyw.join(","));
+                            },
+                            None => {}
+                        }
                     },
                     None => {
                         title { "Anna Aurora's website" }
                     }
                 }
+                meta name="author" content="Anna Aurora";
                 meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5";
                 link rel="stylesheet" href="/static/global.css";
                 link rel="icon" type="image/png" sizes="36x30" href="/static/favicon.png";

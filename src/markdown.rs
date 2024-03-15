@@ -222,7 +222,8 @@ pub async fn md_page_list(md_dir: &str, title: &str) -> Markup {
     base(Some(MyFrontmatter {
         title: title.to_string(),
         date_published: None,
-        description: None
+        description: None,
+        keywords: None
     }), html! {
         ol .md_dir_list {
             @for (key, val) in MD_ROOT.sub_dirs.get(md_dir).unwrap().iter() {

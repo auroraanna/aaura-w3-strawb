@@ -42,7 +42,12 @@ pub async fn linux_journey() -> Markup {
         Some(MyFrontmatter {
             title: "Linux journey".to_string(),
             date_published: None,
-            description: Some("Anna Aurora's personal timeline of Linux distributions that she's used, including information on when she started using them and for how long she used them.".to_string())
+            description: Some("Anna Aurora's personal timeline of Linux distributions that she's used, including information on when she started using them and for how long she used them.".to_string()),
+            keywords: Some(vec![
+                "linux-distros".to_owned(),
+                "timeline".to_owned(),
+                "personal-linux-journey".to_owned()
+            ])
         }),
         html! {
             p { "My personal timeline of Linux distributions that I've used." }
