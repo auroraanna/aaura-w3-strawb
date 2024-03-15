@@ -12,6 +12,7 @@ use std::{
     }
 };
 use maud::{
+    DOCTYPE,
     html,
     Markup
 };
@@ -21,6 +22,11 @@ use tower_http::services::{
 };
 use fontconfig::Fontconfig;
 use axum::{
+    body::Body,
+    response::{
+        AppendHeaders,
+        IntoResponse
+    },
     routing::get,
     Router
 };
@@ -36,6 +42,12 @@ use crate::{
     },
     linux_journey::linux_journey
 };
+use http::{
+    header::LOCATION,
+    StatusCode,
+    Request
+};
+use axum_macros::debug_handler;
 
 pub const BASE_URL: &str = "https://annaaurora.eu/";
 
@@ -126,6 +138,30 @@ fn comic_neue_bold() -> PathBuf {
     font.path
 }
 
+#[debug_handler]
+async fn redirect_to_dir(req: Request<Body>) -> impl IntoResponse {
+    let path = req.uri().path().strip_prefix("/").unwrap();
+    let redirect_url = BASE_URL.to_owned() + &path + "/";
+
+    (
+        StatusCode::MOVED_PERMANENTLY,
+        AppendHeaders([
+            (LOCATION, redirect_url.clone())
+        ]),
+        Body::new(
+            html! {
+                (DOCTYPE)
+                html lang="en" {
+                    body {
+                        a href=(redirect_url) { "Moved permanently" }
+                        "."
+                    }
+                }
+            }.into_string()
+        )
+    )
+}
+
 #[tokio::main]
 async fn main() {
     lazy_static::initialize(&ENV_VARS);
@@ -138,7 +174,9 @@ async fn main() {
         .nest_service("/static/", ServeDir::new(&ENV_VARS.static_dir))
         .route("/linux-journey/", get(linux_journey))
         .route("/blog/", get(md_page_list("blog", "Blog").await))
+        .route("/:md_page", get(redirect_to_dir))
         .route("/:md_page/", get(handle_top_lvl_md_page))
+        .route("/:md_dir/:md_page", get(redirect_to_dir))
         .route("/:md_dir/:md_page/", get(handle_sub_lvl_md_page))
         .route("/atom.xml", get(atom_feed));
 
