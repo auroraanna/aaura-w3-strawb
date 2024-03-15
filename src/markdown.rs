@@ -231,7 +231,7 @@ pub async fn md_page_list(md_dir: &str, title: &str) -> Markup {
                     time datetime=(formatted_date) {
                         (formatted_date)
                     }
-                    a href=(key) { (val.frontmatter.title) }
+                    a href=(key.to_owned() + "/") { (val.frontmatter.title) }
                 }
             }
         }
