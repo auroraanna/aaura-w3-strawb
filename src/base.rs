@@ -13,10 +13,11 @@ use crate::{
     footer::footer
 };
 
-#[derive(Deserialize)]
+#[derive(Debug, Clone, Deserialize)]
 pub struct MyFrontmatter {
     pub title: String,
-    pub date_published: Option<DateTime<Utc>>
+    pub date_published: Option<DateTime<Utc>>,
+    pub description: Option<String>
 }
 
 pub async fn base(frontmatter: Option<MyFrontmatter>, content: Markup) -> Markup {

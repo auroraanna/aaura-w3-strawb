@@ -41,7 +41,8 @@ pub async fn linux_journey() -> Markup {
     base(
         Some(MyFrontmatter {
             title: "Linux journey".to_string(),
-            date_published: None
+            date_published: None,
+            description: Some("Anna Aurora's personal timeline of Linux distributions that she's used, including information on when she started using them and for how long she used them.".to_string())
         }),
         html! {
             p { "My personal timeline of Linux distributions that I've used." }

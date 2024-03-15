@@ -165,6 +165,13 @@ impl MdRoot {
 }
 
 lazy_static::lazy_static! {
+    pub static ref MAUD_VERSION: String = cargo_metadata::MetadataCommand::new().exec().unwrap().packages.iter().find_map(|package| {
+        if package.name == "maud" {
+            Some(package.version.to_string())
+        } else {
+            None
+        }
+    }).unwrap();
     pub static ref MD_ROOT: MdRoot = MdRoot::new();
 }
 
@@ -214,7 +221,8 @@ pub async fn handle_sub_lvl_md_page(
 pub async fn md_page_list(md_dir: &str, title: &str) -> Markup {
     base(Some(MyFrontmatter {
         title: title.to_string(),
-        date_published: None
+        date_published: None,
+        description: None
     }), html! {
         ol .md_dir_list {
             @for (key, val) in MD_ROOT.sub_dirs.get(md_dir).unwrap().iter() {
@@ -228,4 +236,47 @@ pub async fn md_page_list(md_dir: &str, title: &str) -> Markup {
             }
         }
     }).await
+}
+
+pub async fn atom_feed() -> impl IntoResponse {
+    (
+        AppendHeaders([
+            (CONTENT_TYPE, "application/atom+xml; charset=utf8")
+        ]),
+        // html! can also be used to generate XML with this hack.
+        "<?xml version=\"1.0\" encoding=\"utf-8\"?>".to_owned() + &html! {
+            feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en" xml:base=(crate::BASE_URL) {
+                id { (crate::BASE_URL) }
+                title { "Anna Aurora" }
+                //updated { (MD_ROOT.lock().unwrap().latest_date.to_rfc3339()) }
+                updated { (MD_ROOT.latest_date.to_rfc3339()) }
+                author {
+                    name { "Anna Aurora" }
+                    email { "anna@annaaurora.eu" }
+                    uri { (crate::BASE_URL) }
+                }
+                link rel="self" href=(crate::BASE_URL.to_owned() + "atom.xml") type="application/atom+xml" title="Atom feed for Anna Aurora's website" {}
+                link rel="related" href=(crate::BASE_URL) type="text/html" title="Anna Aurora's website" {}
+                generator uri="https://maud.lambda.xyz/" version=(MAUD_VERSION.clone()) { "Maud" }
+                icon { "static/favicon.webp" }
+                subtitle { "The feed for pages on Anna Aurora's website containing flow text or artwork that have an associated publication date, e.g. blog entries." }
+
+                @for (md_dir_name, md_dir) in MD_ROOT.sub_dirs.iter() {
+                    @for (md_page_name, md_page) in md_dir.iter() {
+                        entry {
+                            @let date = md_page.frontmatter.date_published.unwrap().to_rfc3339();
+                            @let page_url = format!("{}{}/{}/", crate::BASE_URL, md_dir_name, md_page_name);
+
+                            id { (page_url) }
+                            title { (md_page.frontmatter.title) }
+                            published { (date) }
+                            updated { (date) }
+                            summary { (md_page.frontmatter.description.as_ref().expect("Markdown pages in subdirectories need to contain a description in their frontmatter.")) }
+                            content type="text/html" src=(page_url) {}
+                        }
+                    }
+                }
+            }
+        }.into_string()
+    )
 }

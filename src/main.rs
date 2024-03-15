@@ -31,10 +31,13 @@ use crate::{
         MD_ROOT,
         handle_top_lvl_md_page,
         handle_sub_lvl_md_page,
-        md_page_list
+        md_page_list,
+        atom_feed
     },
     linux_journey::linux_journey
 };
+
+pub const BASE_URL: &str = "https://annaaurora.eu/";
 
 struct EnvVars {
     bind_address: String,
@@ -126,6 +129,7 @@ fn comic_neue_bold() -> PathBuf {
 #[tokio::main]
 async fn main() {
     lazy_static::initialize(&ENV_VARS);
+    lazy_static::initialize(&MAUD_VERSION);
     lazy_static::initialize(&MD_ROOT);
 
     let app = Router::new()
@@ -136,6 +140,7 @@ async fn main() {
         .route("/blog/", get(md_page_list("blog", "Blog").await))
         .route("/:md_page/", get(handle_top_lvl_md_page))
         .route("/:md_dir/:md_page/", get(handle_sub_lvl_md_page))
+        .route("/atom.xml", get(atom_feed));
 
     let listener = tokio::net::TcpListener::bind(&ENV_VARS.bind_address).await.unwrap();
     axum::serve(listener, app.into_make_service()).await.unwrap();
