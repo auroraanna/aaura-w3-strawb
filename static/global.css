@@ -232,6 +232,11 @@ footer > a {
 	align-items: center;
 }
 
+#footer_text {
+	line-height: 50%;
+	text-align: center;
+}
+
 table {
 	border-collapse: collapse;
 	border-style: solid;

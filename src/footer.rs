@@ -62,10 +62,17 @@ pub async fn footer() -> Markup {
                 }
             }
             a #one_mb_club href="https://1mb.club/" { "1MB Club" }
-            p {
-                "You were served by "
-                code { (format!("{}", current_exe().unwrap().display())) }
-                "."
+            div #footer_text {
+                p {
+                    "You were served by "
+                    code { (format!("{}", current_exe().unwrap().display())) }
+                    "."
+                }
+                p {
+                    "Using "
+                    a href="https://maud.lambda.xyz/" { "maud" }
+                    " for HTML templating."
+                }
             }
         }
     }
