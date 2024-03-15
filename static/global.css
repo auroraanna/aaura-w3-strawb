@@ -47,6 +47,10 @@ a:focus {
 	color: var(--on_anchor);
 }
 
+h1, h2, h3, h4, h5, h6 {
+	font-family: "Comic Neue";
+}
+
 h2 > a, h3 > a, h4 > a, h5 > a, h6 > a {
 	padding-left: 3pt;
 	visibility: hidden;
