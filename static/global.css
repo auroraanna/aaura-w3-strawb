@@ -270,11 +270,13 @@ img {
 	width: 100%;
 }
 
-.md_dir_list {
+ol.md_dir_list {
 	display: grid;
+	list-style-type: none;
+	padding-inline-start: 0px;
 }
 
-.md_dir_list > li  {
+ol.md_dir_list > li  {
 	display: grid;
 	grid-template-columns: subgrid;
 	grid-column: 1 / 3;
