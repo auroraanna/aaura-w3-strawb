@@ -134,7 +134,7 @@ async fn index() -> Markup {
 fn comic_neue_bold() -> PathBuf {
     let fc = Fontconfig::new().unwrap();
     let font = fc.find("Comic Neue", Some("Bold")).unwrap();
-    eprintln!("{}", font.path.display());
+    eprintln!("Using font at this path for Comic Neue: {}", font.path.display());
     font.path
 }
 
