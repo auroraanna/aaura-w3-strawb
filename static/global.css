@@ -105,12 +105,13 @@ header > nav {
 	flex-direction: row;
 	flex-wrap: wrap;
 	column-gap: 10pt;
-	row-gap: 2pt;
+	row-gap: 4pt;
 	align-items: center;
 }
 
 header > nav a {
 	height: min-content;
+	font-size: 15pt;
 }
 
 header > nav a::before {
