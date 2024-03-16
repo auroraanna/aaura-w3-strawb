@@ -16,9 +16,12 @@ use maud::{
     html,
     Markup
 };
-use tower_http::services::{
-    ServeDir,
-    ServeFile
+use tower_http::{
+    services::{
+        ServeDir,
+        ServeFile
+    },
+    compression::CompressionLayer
 };
 use fontconfig::Fontconfig;
 use axum::{
@@ -178,7 +181,12 @@ async fn main() {
         .route("/:md_page/", get(handle_top_lvl_md_page))
         .route("/:md_dir/:md_page", get(redirect_to_dir))
         .route("/:md_dir/:md_page/", get(handle_sub_lvl_md_page))
-        .route("/atom.xml", get(atom_feed));
+        .route("/atom.xml", get(atom_feed))
+        .layer(CompressionLayer::new()
+            .br(true)
+            .gzip(true)
+            .zstd(true)
+        );
 
     let listener = tokio::net::TcpListener::bind(&ENV_VARS.bind_address).await.unwrap();
     axum::serve(listener, app.into_make_service()).await.unwrap();
