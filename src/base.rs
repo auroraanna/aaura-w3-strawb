@@ -59,7 +59,9 @@ pub async fn base(frontmatter: Option<MyFrontmatter>, content: Markup) -> Markup
                 main {
                     @match frontmatter {
                         Some(ref fm) => {
-                            h1 { (fm.title) }
+                            @if fm.title != "Index" {
+                                h1 { (fm.title) }
+                            }
                             @match fm.date_published {
                                 Some(date) => {
                                     p {

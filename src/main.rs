@@ -34,7 +34,10 @@ use axum::{
     Router
 };
 use crate::{
-    base::base,
+    base::{
+        base,
+        MyFrontmatter
+    },
     markdown::{
         MAUD_VERSION,
         MD_ROOT,
@@ -100,7 +103,12 @@ lazy_static::lazy_static! {
 
 async fn index() -> Markup {
     base(
-        None,
+        Some(MyFrontmatter {
+            title: "Index".to_string(),
+            date_published: None,
+            description: Some("The start page of Anna Aurora's website describing her person and interests.".to_string()),
+            keywords: None
+        }),
         html! { 
             div #portrait {
                 img src="/static/portrait-srgb-lossier-downscaled.jpg" alt="A photo of showing Anna Aurora outdoors from the top to her sholders. She is wearing fox ears, a choker and a grey tshirt. She is holding her right hand up to her shoulder in joy. She has her eyes closed and is smiling. The background contains the sky, mossy walls and trees." {}
