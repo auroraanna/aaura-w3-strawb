@@ -49,7 +49,10 @@ use crate::{
     linux_journey::linux_journey
 };
 use http::{
-    header::LOCATION,
+    header::{
+        LOCATION,
+        CONTENT_TYPE
+    },
     StatusCode,
     Request
 };
@@ -173,6 +176,18 @@ async fn redirect_to_dir(req: Request<Body>) -> impl IntoResponse {
     )
 }
 
+async fn do_not_ads() -> impl IntoResponse {
+    (
+        AppendHeaders([
+            (CONTENT_TYPE, "text/plain; charset=utf8")
+        ]),
+        Body::new(
+            "placeholder.example.com, placeholder, DIRECT, placeholder"
+            .to_string()
+        )
+    )
+}
+
 #[tokio::main]
 async fn main() {
     lazy_static::initialize(&ENV_VARS);
@@ -190,6 +205,8 @@ async fn main() {
         .route("/:md_dir/:md_page", get(redirect_to_dir))
         .route("/:md_dir/:md_page/", get(handle_sub_lvl_md_page))
         .route("/atom.xml", get(atom_feed))
+        .route("/ads.txt", get(do_not_ads))
+        .route("/app-ads.txt", get(do_not_ads))
         .layer(CompressionLayer::new()
             .br(true)
             .gzip(true)
