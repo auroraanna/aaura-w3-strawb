@@ -1,3 +1,11 @@
+use axum::{
+    response::{
+        AppendHeaders,
+        IntoResponse
+    },
+    body::Body
+};
+use http::header::CONTENT_SECURITY_POLICY;
 use serde::Deserialize;
 use maud::{
     html,
@@ -12,6 +20,21 @@ use crate::{
     header::header,
     footer::footer
 };
+use base64::{
+    Engine,
+    engine::general_purpose
+};
+use rand::{
+    rngs::OsRng,
+    RngCore
+};
+
+fn nonce() -> String {
+    let mut rng = OsRng::default();
+    let mut nonce = [0u8; 16];
+    rng.fill_bytes(&mut nonce);
+    general_purpose::STANDARD.encode(&nonce)
+}
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct MyFrontmatter {
@@ -21,8 +44,10 @@ pub struct MyFrontmatter {
     pub keywords: Option<Vec<String>>
 }
 
-pub async fn base(frontmatter: Option<MyFrontmatter>, content: Markup) -> Markup {
-    html! {
+pub async fn base(frontmatter: Option<MyFrontmatter>, content: Markup) -> impl IntoResponse {
+    let nonce = nonce();
+
+    let html = html! {
         (DOCTYPE)
         html lang="en" {
             head {
@@ -55,7 +80,7 @@ pub async fn base(frontmatter: Option<MyFrontmatter>, content: Markup) -> Markup
                 link rel="icon" type="image/png" sizes="36x30" href="/static/favicon.png";
             }
             body {
-                (header().await)
+                (header(&nonce).await)
                 main {
                     @match frontmatter {
                         Some(ref fm) => {
@@ -79,5 +104,13 @@ pub async fn base(frontmatter: Option<MyFrontmatter>, content: Markup) -> Markup
                 (footer().await)
             }
         }
-    }
+    }.into_string();
+
+    (
+        AppendHeaders([(
+            CONTENT_SECURITY_POLICY,
+            format!("{} style-src 'self' 'nonce-{}';", crate::COMMON_CSP.to_owned(), nonce)
+        )]),
+        Body::new(html)
+    )
 }

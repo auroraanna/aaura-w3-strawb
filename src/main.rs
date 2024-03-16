@@ -13,15 +13,16 @@ use std::{
 };
 use maud::{
     DOCTYPE,
-    html,
-    Markup
+    html
 };
+use tower::builder::ServiceBuilder;
 use tower_http::{
     services::{
         ServeDir,
         ServeFile
     },
-    compression::CompressionLayer
+    compression::CompressionLayer,
+    set_header::SetResponseHeaderLayer
 };
 use fontconfig::Fontconfig;
 use axum::{
@@ -43,7 +44,6 @@ use crate::{
         MD_ROOT,
         handle_top_lvl_md_page,
         handle_sub_lvl_md_page,
-        md_page_list,
         atom_feed
     },
     linux_journey::linux_journey
@@ -51,14 +51,17 @@ use crate::{
 use http::{
     header::{
         LOCATION,
-        CONTENT_TYPE
+        CONTENT_TYPE,
+        CONTENT_SECURITY_POLICY
     },
+    HeaderValue,
     StatusCode,
     Request
 };
 use axum_macros::debug_handler;
 
 pub const BASE_URL: &str = "https://annaaurora.eu/";
+pub const COMMON_CSP: &str = "default-src 'none'; font-src 'self'; img-src 'self'; base-uri 'self'; form-action 'none';";
 
 struct EnvVars {
     bind_address: String,
@@ -104,7 +107,7 @@ lazy_static::lazy_static! {
     static ref ENV_VARS: EnvVars = EnvVars::new();
 }
 
-async fn index() -> Markup {
+async fn index() -> impl IntoResponse {
     base(
         Some(MyFrontmatter {
             title: "Index".to_string(),
@@ -199,7 +202,6 @@ async fn main() {
         .nest_service("/fonts/ComicNeue-Bold", ServeFile::new(&comic_neue_bold()))
         .nest_service("/static/", ServeDir::new(&ENV_VARS.static_dir))
         .route("/linux-journey/", get(linux_journey))
-        .route("/blog/", get(md_page_list("blog", "Blog").await))
         .route("/:md_page", get(redirect_to_dir))
         .route("/:md_page/", get(handle_top_lvl_md_page))
         .route("/:md_dir/:md_page", get(redirect_to_dir))
@@ -207,10 +209,18 @@ async fn main() {
         .route("/atom.xml", get(atom_feed))
         .route("/ads.txt", get(do_not_ads))
         .route("/app-ads.txt", get(do_not_ads))
-        .layer(CompressionLayer::new()
-            .br(true)
-            .gzip(true)
-            .zstd(true)
+        .layer(ServiceBuilder::new()
+            .layer(CompressionLayer::new()
+                .br(true)
+                .gzip(true)
+                .zstd(true)
+            )
+            .layer(SetResponseHeaderLayer::if_not_present(
+                CONTENT_SECURITY_POLICY,
+                HeaderValue::from_str(
+                    &format!("{} style-src 'self';", COMMON_CSP)
+                ).unwrap()
+            ))
         );
 
     let listener = tokio::net::TcpListener::bind(&ENV_VARS.bind_address).await.unwrap();

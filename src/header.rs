@@ -1,6 +1,7 @@
 use maud::{
     html,
-    Markup
+    Markup,
+    PreEscaped
 };
 
 struct MenuEntry {
@@ -27,7 +28,7 @@ impl Menu {
     }
 }
 
-pub async fn header() -> Markup {
+pub async fn header(nonce: &str) -> Markup {
     let mut menu = Menu::new();
     menu.add_entry("/", "Home", Some('🏠'));
     menu.add_entry("/blog/", "Blog", Some('📜'));
@@ -45,13 +46,18 @@ pub async fn header() -> Markup {
         header {
             img #banner src="/static/banner-text-to-path.svg" alt="The name “Anna Aurora” in the font Comic Neue, a font looking similar to Comic Sans. “Anna” rotated 2° counter-clockwise and is placed over “Aurora” which is rotated by 2° clockwise. Both words are colored in the same gradient, starting with a light purple at the top left and ending in a light pink at the bottom right." {}
             nav {
-                @for entry in menu.entries {
-                    @match entry.before {
-                        Some(content) => {
-                            a href=(entry.href) style=(format!("--before: '{}';", content)) { (entry.name) }
-                        },
-                        None => {
-                            a href=(entry.href) { (entry.name) }
+                @for entry in &menu.entries {
+                    a href=(entry.href) { (entry.name) }
+                }
+                style nonce=(nonce) {
+                    @for (i, entry) in menu.entries.iter().enumerate() {
+                        @match entry.before {
+                            Some(content) => {
+                                (PreEscaped(
+                                    format!("header > nav a:nth-child({}) {{ --before: '{}'; }} ", i + 1, content)
+                                ))
+                            },
+                            None => {}
                         }
                     }
                 }

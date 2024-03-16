@@ -182,18 +182,19 @@ pub async fn handle_top_lvl_md_page(
     eprintln!("handle_top_lvl_md_page");
     dbg!(&md_page);
 
+    for (md_dir_name, md_dir) in MD_ROOT.sub_dirs.iter() {
+        if md_dir_name == &md_page {
+            return md_page_list(md_dir_name).await.into_response()
+        }
+    }
+
     let md_page = MD_ROOT.pages
         .get(&md_page).unwrap().clone();
 
-    return (
-        StatusCode::OK,
-        Body::new(
-            base(
-                Some(md_page.frontmatter),
-                html! { (PreEscaped(md_page.html)) }
-            ).await.into_string()
-        )
-    );
+    base(
+        Some(md_page.frontmatter),
+        html! { (PreEscaped(md_page.html)) }
+    ).await.into_response()
 }
 
 #[debug_handler]
@@ -209,20 +210,18 @@ pub async fn handle_sub_lvl_md_page(
 
     return (
         StatusCode::OK,
-        Body::new(
-            base(
-                Some(md_page.frontmatter),
-                html! { (PreEscaped(md_page.html)) }
-            ).await.into_string()
-        )
+        base(
+            Some(md_page.frontmatter),
+            html! { (PreEscaped(md_page.html)) }
+        ).await
     );
 }
 
-pub async fn md_page_list(md_dir: &str, title: &str) -> Markup {
+pub async fn md_page_list(md_dir: &str) -> impl IntoResponse {
     base(Some(MyFrontmatter {
-        title: title.to_string(),
+        title: md_dir.to_string(),
         date_published: None,
-        description: None,
+        description: Some(format!("A list of all posts under /{md_dir}/.")),
         keywords: None
     }), html! {
         ol .md_dir_list {

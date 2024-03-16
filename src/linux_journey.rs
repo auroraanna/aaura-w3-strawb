@@ -1,3 +1,4 @@
+use axum::response::IntoResponse;
 use chrono::{
     naive::NaiveDate,
     Utc
@@ -34,7 +35,7 @@ struct JourneyEntry {
     distro: Distro
 }
 
-pub async fn linux_journey() -> Markup {
+pub async fn linux_journey() -> impl IntoResponse {
     let journey_json_string = read_to_string(Path::new("./static/linux-journey.json")).unwrap();
     let journey: Vec<JourneyEntry> = serde_json::from_str(&journey_json_string).unwrap();
 
