@@ -22,6 +22,7 @@ use tower_http::{
         ServeDir,
         ServeFile
     },
+    catch_panic::CatchPanicLayer,
     compression::CompressionLayer,
     set_header::SetResponseHeaderLayer
 };
@@ -220,6 +221,7 @@ async fn main() {
         .route("/ads.txt", get(do_not_ads))
         .route("/app-ads.txt", get(do_not_ads))
         .layer(ServiceBuilder::new()
+            .layer(CatchPanicLayer::new())
             .layer(middleware::from_fn(apply_etag))
             .layer(CompressionLayer::new()
                 .br(true)
