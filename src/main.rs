@@ -208,7 +208,7 @@ async fn main() {
         .nest_service("/fonts/ComicNeue-Bold", ServeFile::new(&comic_neue_bold()))
         .layer(SetResponseHeaderLayer::if_not_present(
             CACHE_CONTROL,
-            HeaderValue::from_str(&format!("max-age={}", SECS_IN_YEAR)).unwrap()
+            HeaderValue::from_str(&format!("max-age={}, public", SECS_IN_YEAR)).unwrap()
         ))
         .route("/", get(index))
         .nest_service("/static/", ServeDir::new(&ENV_VARS.static_dir))
@@ -236,7 +236,7 @@ async fn main() {
             ))
             .layer(SetResponseHeaderLayer::if_not_present(
                 CACHE_CONTROL,
-                HeaderValue::from_static("no-cache")
+                HeaderValue::from_static("no-cache, public")
             ))
         );
 
