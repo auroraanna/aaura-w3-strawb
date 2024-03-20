@@ -3,6 +3,7 @@ mod header;
 mod footer;
 mod markdown;
 mod linux_journey;
+mod etag;
 
 use std::{
     env,
@@ -32,7 +33,8 @@ use axum::{
         IntoResponse
     },
     routing::get,
-    Router
+    Router,
+    middleware
 };
 use crate::{
     base::{
@@ -50,15 +52,17 @@ use crate::{
 };
 use http::{
     header::{
-        LOCATION,
+        CACHE_CONTROL,
+        CONTENT_SECURITY_POLICY,
         CONTENT_TYPE,
-        CONTENT_SECURITY_POLICY
+        LOCATION
     },
     HeaderValue,
-    StatusCode,
-    Request
+    Request,
+    StatusCode
 };
 use axum_macros::debug_handler;
+use etag::apply_etag;
 
 pub const BASE_URL: &str = "https://annaaurora.eu/";
 pub const COMMON_CSP: &str = "default-src 'none'; font-src 'self'; img-src 'self'; base-uri 'self'; form-action 'none';";
@@ -191,6 +195,8 @@ async fn do_not_ads() -> impl IntoResponse {
     )
 }
 
+const SECS_IN_YEAR: usize = 60 * 60 * 24 * 365;
+
 #[tokio::main]
 async fn main() {
     lazy_static::initialize(&ENV_VARS);
@@ -198,8 +204,12 @@ async fn main() {
     lazy_static::initialize(&MD_ROOT);
 
     let app = Router::new()
-        .route("/", get(index))
         .nest_service("/fonts/ComicNeue-Bold", ServeFile::new(&comic_neue_bold()))
+        .layer(SetResponseHeaderLayer::if_not_present(
+            CACHE_CONTROL,
+            HeaderValue::from_str(&format!("max-age={}", SECS_IN_YEAR)).unwrap()
+        ))
+        .route("/", get(index))
         .nest_service("/static/", ServeDir::new(&ENV_VARS.static_dir))
         .route("/linux-journey/", get(linux_journey))
         .route("/:md_page", get(redirect_to_dir))
@@ -210,6 +220,7 @@ async fn main() {
         .route("/ads.txt", get(do_not_ads))
         .route("/app-ads.txt", get(do_not_ads))
         .layer(ServiceBuilder::new()
+            .layer(middleware::from_fn(apply_etag))
             .layer(CompressionLayer::new()
                 .br(true)
                 .gzip(true)
@@ -220,6 +231,10 @@ async fn main() {
                 HeaderValue::from_str(
                     &format!("{} style-src 'self';", COMMON_CSP)
                 ).unwrap()
+            ))
+            .layer(SetResponseHeaderLayer::if_not_present(
+                CACHE_CONTROL,
+                HeaderValue::from_static("no-cache")
             ))
         );
 
