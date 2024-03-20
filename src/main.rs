@@ -56,7 +56,8 @@ use http::{
         CACHE_CONTROL,
         CONTENT_SECURITY_POLICY,
         CONTENT_TYPE,
-        LOCATION
+        LOCATION,
+        X_CONTENT_TYPE_OPTIONS
     },
     HeaderValue,
     Request,
@@ -237,6 +238,10 @@ async fn main() {
             .layer(SetResponseHeaderLayer::if_not_present(
                 CACHE_CONTROL,
                 HeaderValue::from_static("no-cache, public")
+            ))
+            .layer(SetResponseHeaderLayer::overriding(
+                X_CONTENT_TYPE_OPTIONS,
+                HeaderValue::from_static("no-sniff")
             ))
         );
 
