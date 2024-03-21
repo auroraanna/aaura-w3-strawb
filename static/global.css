@@ -17,6 +17,7 @@
 	--pink: #ff2ef8;
 	background-color: var(--background);
 	color: var(--on_background);
+	min-width: 212px;
 }
 
 body {
@@ -172,6 +173,7 @@ footer > a {
 	font-family: monospace;
 	justify-content: center;
 	align-items: center;
+	width: max-content;
 }
 
 #th50_kb_club > div {
@@ -206,6 +208,7 @@ footer > a {
 	font-family: sans-serif;
 	display: flex;
 	flex-direction: row;
+	width: max-content;
 }
 
 #fh12_kb_club > div {
