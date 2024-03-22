@@ -47,6 +47,7 @@ use crate::{
         MD_ROOT,
         handle_top_lvl_md_page,
         handle_sub_lvl_md_page,
+        handle_md_images,
         atom_feed
     },
     linux_journey::linux_journey
@@ -218,6 +219,7 @@ async fn main() {
         .route("/:md_page/", get(handle_top_lvl_md_page))
         .route("/:md_dir/:md_page", get(redirect_to_dir))
         .route("/:md_dir/:md_page/", get(handle_sub_lvl_md_page))
+        .route("/:md_dir/:md_page/:image", get(handle_md_images))
         .route("/atom.xml", get(atom_feed))
         .route("/ads.txt", get(do_not_ads))
         .route("/app-ads.txt", get(do_not_ads))

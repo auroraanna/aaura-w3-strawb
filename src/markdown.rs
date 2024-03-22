@@ -4,7 +4,7 @@ use std::{
         read_dir,
         read_to_string
     }, 
-    path::Path,
+    path::Path
 };
 use pulldown_cmark::{
     Parser,
@@ -28,6 +28,7 @@ use axum::{
     extract,
     body::Body,
     response::{
+        Response,
         IntoResponse,
         AppendHeaders
     }
@@ -40,6 +41,11 @@ use chrono::{
     DateTime,
     Utc,
 };
+use tower_http::services::fs::{
+    ServeFile,
+    ServeFileSystemResponseBody
+};
+use tower::Service;
 use axum_macros::debug_handler;
 
 #[derive(Debug, Clone)]
@@ -215,6 +221,48 @@ pub async fn handle_sub_lvl_md_page(
             html! { (PreEscaped(md_page.html)) }
         ).await
     );
+}
+
+pub async fn handle_md_images(
+    req: extract::Request<Body>
+) -> Result<Response<ServeFileSystemResponseBody>, Response<Body>> {
+    let mut rel_path_string = req.uri().to_string();
+    rel_path_string.remove(0);
+    let rel_path = Path::new(&rel_path_string);
+    
+    let (file_name, folder) = if rel_path.file_stem().unwrap().to_str().unwrap().ends_with("-lossless") {
+        (
+            Path::new(
+                rel_path.file_stem().unwrap().to_str().unwrap()
+                    .strip_suffix("-lossless").unwrap()
+            ).with_extension(
+                rel_path.extension().unwrap()
+            ),
+            "markdown"
+        )
+    } else {
+        (
+            Path::new(&(
+                rel_path.file_stem().unwrap().to_str().unwrap().to_owned()
+                + "-lossier"
+            )).with_extension(
+                rel_path.extension().unwrap()
+            ),
+            "processed-media"
+        )
+    };
+    let path = Path::new(folder)
+        .join(rel_path.parent().unwrap())
+        .join(file_name);
+    eprintln!("{}", path.display());
+
+    match ServeFile::new(path).call(req).await {
+        Ok(res) => Ok(res),
+        Err(e) => Err((
+            StatusCode::NOT_FOUND,
+            format!("{}", e)
+        ).into_response())
+    }
 }
 
 pub async fn md_page_list(md_dir: &str) -> impl IntoResponse {
