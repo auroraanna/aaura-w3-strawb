@@ -53,7 +53,7 @@ pub async fn base(frontmatter: Option<MyFrontmatter>, content: Markup) -> impl I
             head {
                 meta charset="utf8";
                 meta author="Anna Aurora";
-                meta generator=("annaaurora.eu-cranberry");
+                meta generator=("aaura-w3-strawb");
                 @match frontmatter {
                     Some(ref fm) => {
                         title { (format!("Anna Aurora's website - {}", fm.title)) }

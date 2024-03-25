@@ -78,7 +78,7 @@ struct EnvVars {
 
 impl EnvVars {
     fn new() -> Self {
-        let bind_address_key = "ANNAAURORA_EU_CRANBERRY_BIND_ADDRESS";
+        let bind_address_key = "AAURA_W3_STRAWB_BIND_ADDRESS";
         let bind_address = match env::var(bind_address_key) {
             Ok(address) => address,
             Err(e) => {
@@ -88,7 +88,7 @@ impl EnvVars {
             }
         };
     
-        let bcdg_json_key: &str = "ANNAAURORA_EU_CRANBERRY_BCDG_JSON_PATH";
+        let bcdg_json_key: &str = "AAURA_W3_STRAWB_BCDG_JSON_PATH";
         let bcdg_json: Option<PathBuf> = match env::var(bcdg_json_key) {
             Ok(p) => Some(Path::new(&p).to_owned()),
             Err(e) => {
@@ -97,7 +97,7 @@ impl EnvVars {
             }
         };
 
-        let static_dir_key = "ANNAAURORA_EU_CRANBERRY_STATIC_DIR";
+        let static_dir_key = "AAURA_W3_STRAWB_STATIC_DIR";
         let static_dir = match env::var(static_dir_key) {
             Ok(p) => Path::new(&p).to_owned(),
             Err(e) => {

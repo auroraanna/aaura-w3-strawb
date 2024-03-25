@@ -1,12 +1,12 @@
 [package]
-name = "annaaurora-eu-cranberry"
+name = "aaura-w3-strawb"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [[bin]]
-name = "annaaurora-eu-cranberry"
+name = "aaura-w3-strawb"
 path = "src/main.rs"
 
 [dependencies]

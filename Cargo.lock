@@ -3,6 +3,34 @@
 version = 3
 
 [[package]]
+name = "aaura-w3-strawb"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "axum-macros",
+ "base64 0.22.0",
+ "cargo_metadata",
+ "chrono",
+ "fontconfig",
+ "http 1.0.0",
+ "lazy_static",
+ "maud",
+ "notify",
+ "pulldown-cmark",
+ "pulldown-cmark-frontmatter",
+ "rand",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "slug",
+ "tokio",
+ "toml",
+ "tower",
+ "tower-http",
+ "xxhash-rust",
+]
+
+[[package]]
 name = "addr2line"
 version = "0.20.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -45,34 +73,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "819e7219dbd41043ac279b19830f2efc897156490d7fd6ea916720117ee66311"
 dependencies = [
  "libc",
-]
-
-[[package]]
-name = "annaaurora-eu-cranberry"
-version = "0.1.0"
-dependencies = [
- "axum",
- "axum-macros",
- "base64 0.22.0",
- "cargo_metadata",
- "chrono",
- "fontconfig",
- "http 1.0.0",
- "lazy_static",
- "maud",
- "notify",
- "pulldown-cmark",
- "pulldown-cmark-frontmatter",
- "rand",
- "reqwest",
- "serde",
- "serde_json",
- "slug",
- "tokio",
- "toml",
- "tower",
- "tower-http",
- "xxhash-rust",
 ]
 
 [[package]]

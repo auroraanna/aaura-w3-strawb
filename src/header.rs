@@ -38,7 +38,7 @@ pub async fn header(nonce: &str) -> Markup {
     menu.add_entry("/contact/", "Contact", Some('👋'));
     menu.add_entry("/linux-journey/", "Linux journey", Some('🐧'));
     menu.add_entry("/license/", "License", Some('©'));
-    menu.add_entry("https://codeberg.org/annaaurora/annaaurora.eu-cranberry", "Source code", Some('📦'));
+    menu.add_entry("https://codeberg.org/annaaurora/aaura-w3-strawb", "Source code", Some('📦'));
     menu.add_entry("/atom.xml", "Atom feed", None);
     menu.add_entry("/feed.json", "JSON feed", None);*/
 

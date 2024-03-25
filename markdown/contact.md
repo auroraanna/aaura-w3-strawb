@@ -20,7 +20,7 @@ I can be reached via Email at <a href="mailto:anna@annaaurora.eu">anna@annaauror
 
 ## Report issues with this website
 
-You can publicly report issues with this website in [it's source code repository's issues on Codeberg](https://codeberg.org/annaaurora/annaaurora.eu-cranberry/issues). You'll need an account on Codeberg however. If you don't want to open one, use any of the others options to make me aware.
+You can publicly report issues with this website in [it's source code repository's issues on Codeberg](https://codeberg.org/annaaurora/aaura-w3-strawb/issues). You'll need an account on Codeberg however. If you don't want to open one, use any of the others options to make me aware.
 
 ## Keyoxide
 
