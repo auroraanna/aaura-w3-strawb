@@ -9,11 +9,13 @@ edition = "2021"
 name = "aaura-w3-strawb"
 path = "src/main.rs"
 
+[build-dependencies]
+cargo_metadata = "0.18.1"
+
 [dependencies]
 axum = { version = "0.7.4", features = ["http1", "json", "matched-path", "original-uri", "query", "tokio", "tower-log", "tracing"] }
 axum-macros = "0.4.1"
 base64 = "0.22.0"
-cargo_metadata = "0.18.1"
 chrono = { version = "0.4.34", features = ["serde"] }
 fontconfig = "0.8.0"
 http = "1.0.0"

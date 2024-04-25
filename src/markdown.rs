@@ -204,13 +204,10 @@ impl MdRoot {
 }
 
 lazy_static::lazy_static! {
-    pub static ref MAUD_VERSION: String = cargo_metadata::MetadataCommand::new().exec().unwrap().packages.iter().find_map(|package| {
-        if package.name == "maud" {
-            Some(package.version.to_string())
-        } else {
-            None
-        }
-    }).unwrap();
+    pub static ref MAUD_VERSION: String = include_str!(concat!(
+        env!("OUT_DIR"),
+        "/maud_version.txt"
+    )).to_owned();
     pub static ref MD_ROOT: MdRoot = MdRoot::new();
 }
 
