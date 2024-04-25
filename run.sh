@@ -1,0 +1,2 @@
+#!/bin/sh
+AAURA_W3_STRAWB_BIND_ADDRESS="localhost:60021" AAURA_W3_STRAWB_BCDG_JSON_PATH=./beCrimeDoGay.json AAURA_W3_STRAWB_WEB_DATA_DIR=./merge cargo run
