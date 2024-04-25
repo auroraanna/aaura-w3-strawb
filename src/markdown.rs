@@ -187,7 +187,7 @@ impl MdRoot {
 
         eprintln!("{}", md_root.pages.get("contact").unwrap().frontmatter.title);
         eprintln!("{}", md_root.sub_dirs.get("blog").unwrap().get("i-bought-a-thinkpad").unwrap().frontmatter.title);
-        eprintln!("{}", md_root.sub_dirs.get("blog").unwrap().get("starship-velociraptor-and-amazing-album").unwrap().frontmatter.title);
+        eprintln!("{}", md_root.sub_dirs.get("blog").unwrap().get("starship-velociraptor-an-amazing-album").unwrap().frontmatter.title);
 
         let mut latest_date: DateTime<Utc> = DateTime::UNIX_EPOCH;
         for (_md_dir_name, md_dir) in md_root.sub_dirs.iter() {
