@@ -32,7 +32,7 @@ pub async fn header(nonce: &str) -> Markup {
     let mut menu = Menu::new();
     menu.add_entry("/", "Home", Some('🏠'));
     menu.add_entry("/blog/", "Blog", Some('📜'));
-    menu.add_entry("/art", "Art portfolio", Some('🌠'));*/
+    menu.add_entry("/art/", "Art portfolio", Some('🌠'));
     menu.add_entry("/static/find-billy", "Find Billy!", Some('🤖'));
     menu.add_entry("https://kaufkauflist.annaaurora.eu", "kaufkauflist", Some('🛒'));
     menu.add_entry("/contact/", "Contact", Some('👋'));
@@ -40,7 +40,6 @@ pub async fn header(nonce: &str) -> Markup {
     menu.add_entry("/license/", "License", Some('©'));
     menu.add_entry("https://codeberg.org/annaaurora/aaura-w3-strawb", "Source code", Some('📦'));
     menu.add_entry("/atom.xml", "Atom feed", None);
-    menu.add_entry("/feed.json", "JSON feed", None);*/
 
     html! {
         header {
