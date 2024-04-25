@@ -20,5 +20,8 @@
       }
     ) // {
       overlays.default = import ./overlay.nix;
+
+      nixosModules.aaura-w3-strawb = import ./modules/aaura-w3-strawb.nix;
+      nixosModules.default = self.nixosModules.aaura-w3-strawb;
     };
 }
