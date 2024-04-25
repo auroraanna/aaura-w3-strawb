@@ -20,9 +20,12 @@ use maud::{
     PreEscaped
 };
 use slug::slugify;
-use crate::base::{
-    base,
-    MyFrontmatter
+use crate::{
+    base::{
+        base,
+        MyFrontmatter
+    },
+    ENV_VARS
 };
 use axum::{
     extract,
@@ -67,6 +70,7 @@ impl MdPage {
         let parser = Parser::new_ext(&md, options);
     
         let mut heading_level = 0;
+        let mut inside_myaudio = false;
         let parser = parser.filter_map(| event |
             match event {
                 Event::Start(Tag::Heading(level, ..)) => {
@@ -84,6 +88,34 @@ impl MdPage {
                         return Some(new_heading);
                     }
                     Some(Event::Text(text))
+                },
+                Event::Start(Tag::Image(link_type, dest_url, title)) => {
+                    dbg!(&dest_url);
+                    let new_dest_url: CowStr<'_> = if dest_url.ends_with(".png") {
+                        (dest_url.strip_suffix(".png").unwrap().to_owned() + "-lossier.webp").into()
+                    } else if dest_url.ends_with(".jpg") {
+                        (dest_url.strip_suffix(".jpg").unwrap().to_owned() + "-lossier.jpg").into()
+                    } else {
+                        dest_url
+                    };
+                    Some(Event::Start(Tag::Image(link_type, new_dest_url, title)))
+                },
+                Event::Html(node) => {
+                    dbg!(&node);
+                    Some(Event::Html(
+                        if node.to_string() == "<myaudio>\n" {
+                            inside_myaudio = true;
+                            "".into()
+                        } else if inside_myaudio {
+                            inside_myaudio = false;
+                            let src = node.to_string().strip_suffix(".flac\n").unwrap().to_owned() + "-lossier.opus";
+                            format!("<audio controls=\"\" src=\"{}\">", src).into()
+                        } else if node.to_string() == "</myaudio>\n" {
+                            "</audio>\n".into()
+                        } else {
+                            node
+                        }
+                    ))
                 },
                 _ => Some(event),
             }
@@ -122,7 +154,8 @@ impl MdRoot {
             latest_date: DateTime::default(),
         };
 
-        for entry in read_dir("markdown").unwrap() {
+        eprintln!("{:?}", ENV_VARS.web_data_dir.join("markdown"));
+        for entry in read_dir(ENV_VARS.web_data_dir.join("markdown")).unwrap() {
             let entry = entry.unwrap();
             let path = entry.path();
             dbg!(&path);
@@ -223,35 +256,16 @@ pub async fn handle_sub_lvl_md_page(
     );
 }
 
-pub async fn handle_md_images(
+pub async fn handle_md_media(
     req: extract::Request<Body>
 ) -> Result<Response<ServeFileSystemResponseBody>, Response<Body>> {
-    let mut rel_path_string = req.uri().to_string();
+    let mut rel_path_string = urlencoding::decode(&req.uri().to_string()).unwrap().into_owned();
     rel_path_string.remove(0);
     let rel_path = Path::new(&rel_path_string);
-    
-    let (file_name, folder) = if rel_path.file_stem().unwrap().to_str().unwrap().ends_with("-lossless") {
-        (
-            Path::new(
-                rel_path.file_stem().unwrap().to_str().unwrap()
-                    .strip_suffix("-lossless").unwrap()
-            ).with_extension(
-                rel_path.extension().unwrap()
-            ),
-            "markdown"
-        )
-    } else {
-        (
-            Path::new(&(
-                rel_path.file_stem().unwrap().to_str().unwrap().to_owned()
-                + "-lossier"
-            )).with_extension(
-                rel_path.extension().unwrap()
-            ),
-            "processed-media"
-        )
-    };
-    let path = Path::new(folder)
+
+    let folder = ENV_VARS.web_data_dir.join("markdown");
+    let file_name = rel_path.file_name().unwrap();
+    let path = Path::new(&folder)
         .join(rel_path.parent().unwrap())
         .join(file_name);
     eprintln!("{}", path.display());

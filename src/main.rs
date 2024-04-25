@@ -47,7 +47,7 @@ use crate::{
         MD_ROOT,
         handle_top_lvl_md_page,
         handle_sub_lvl_md_page,
-        handle_md_images,
+        handle_md_media,
         atom_feed
     },
     linux_journey::linux_journey
@@ -68,12 +68,12 @@ use axum_macros::debug_handler;
 use etag::apply_etag;
 
 pub const BASE_URL: &str = "https://annaaurora.eu/";
-pub const COMMON_CSP: &str = "default-src 'none'; font-src 'self'; img-src 'self'; base-uri 'self'; form-action 'none';";
+pub const COMMON_CSP: &str = "default-src 'none'; font-src 'self'; img-src 'self'; media-src 'self'; base-uri 'self'; form-action 'none';";
 
 struct EnvVars {
     bind_address: String,
     bcdg_json: Option<PathBuf>,
-    static_dir: PathBuf
+    web_data_dir: PathBuf
 }
 
 impl EnvVars {
@@ -97,16 +97,16 @@ impl EnvVars {
             }
         };
 
-        let static_dir_key = "AAURA_W3_STRAWB_STATIC_DIR";
-        let static_dir = match env::var(static_dir_key) {
+        let web_data_dir_key = "AAURA_W3_STRAWB_WEB_DATA_DIR";
+        let web_data_dir = match env::var(web_data_dir_key) {
             Ok(p) => Path::new(&p).to_owned(),
             Err(e) => {
-                eprintln!("{}, {}, using ./static instead", static_dir_key, e);
-                Path::new("./static").to_owned()
+                eprintln!("{}, {}, using /var/lib/aaura-w3-strawb instead", web_data_dir_key, e);
+                Path::new("/var/lib/aaura-w3-strawb").to_owned()
             }
         };
 
-        Self { bind_address, bcdg_json, static_dir }
+        Self { bind_address, bcdg_json, web_data_dir }
     }
 }
 
@@ -213,13 +213,13 @@ async fn main() {
             HeaderValue::from_str(&format!("max-age={}, public", SECS_IN_YEAR)).unwrap()
         ))
         .route("/", get(index))
-        .nest_service("/static/", ServeDir::new(&ENV_VARS.static_dir))
+        .nest_service("/static/", ServeDir::new(&ENV_VARS.web_data_dir.join("static")))
         .route("/linux-journey/", get(linux_journey))
         .route("/:md_page", get(redirect_to_dir))
         .route("/:md_page/", get(handle_top_lvl_md_page))
         .route("/:md_dir/:md_page", get(redirect_to_dir))
         .route("/:md_dir/:md_page/", get(handle_sub_lvl_md_page))
-        .route("/:md_dir/:md_page/:image", get(handle_md_images))
+        .route("/:md_dir/:md_page/:image", get(handle_md_media))
         .route("/atom.xml", get(atom_feed))
         .route("/ads.txt", get(do_not_ads))
         .route("/app-ads.txt", get(do_not_ads))
