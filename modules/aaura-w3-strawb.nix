@@ -12,18 +12,18 @@ in {
     enable = lib.mkEnableOption "The service to run Anna Auror's dynamic webserver, serving Anna's personal website.";
     bind = lib.mkOption {
       description = "The address, including port, to bind the webserver to.";
-      type = lib.types.str;
-      example = "0.0.0.0:80";
-      default = "localhost:60021";
+      type = lib.types.nullOr lib.types.str;
+      example = "0.0.0.0:47238";
+      default = null;
     };
     webData = lib.mkOption {
       description = "A directory containing files served by the webserver directly or processed at a different route.";
-      type = lib.types.path;
-      default = /var/lib/aaura-w3-strawb;
+      type = lib.types.nullOr lib.types.path;
+      default = null;
     };
     bcdgJson = lib.mkOption {
       description = "A path to a file containing the JSON for the Be crime do gay webring. It is used for determining the nearest nodes in the ring.";
-      type = lib.types.str;
+      type = lib.types.nullOr lib.types.path;
       default = null;
     };
   };
