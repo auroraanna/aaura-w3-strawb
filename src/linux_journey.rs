@@ -12,9 +12,12 @@ use std::{
     fs::read_to_string
 };
 use serde::Deserialize;
-use crate::base::{
-    base,
-    MyFrontmatter
+use crate::{
+    base::{
+        base,
+        MyFrontmatter
+    },
+    ENV_VARS
 };
 
 #[derive(Deserialize)]
@@ -36,7 +39,7 @@ struct JourneyEntry {
 }
 
 pub async fn linux_journey() -> impl IntoResponse {
-    let journey_json_string = read_to_string(Path::new("./static/linux-journey.json")).unwrap();
+    let journey_json_string = read_to_string(Path::new(&ENV_VARS.web_data_dir).join("static/linux-journey.json")).unwrap();
     let journey: Vec<JourneyEntry> = serde_json::from_str(&journey_json_string).unwrap();
 
     base(
