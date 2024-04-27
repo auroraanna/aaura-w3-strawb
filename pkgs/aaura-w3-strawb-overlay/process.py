@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 from ffmpy import FFmpeg
-from PIL import Image, features
+from PIL import Image, features, ImageOps
 
 out = Path(sys.argv[2])
 
@@ -48,7 +48,6 @@ for path in reducedPaths:
 	# Resize and save image with reduced quality
 	else:
 		img = Image.open(fp=path, formats=("JPEG", "PNG"))
-		exif = img.info["exif"]
 		
 		savePath = str(savePath).rsplit(".")[0] + "-lossier"
 		if img.format == "JPEG":
@@ -57,6 +56,11 @@ for path in reducedPaths:
 		else:
 			saveFormat = "WEBP"
 			savePath = savePath + ".webp"
+
+		ImageOps.exif_transpose(
+			image=img,
+			in_place=True
+		)
 
 		img = img.resize((
 			img.width // 3,
@@ -67,5 +71,5 @@ for path in reducedPaths:
 			fp=savePath,
 			format=saveFormat,
 			quality=50,
-			exif=exif
 		)
+		img.close()
