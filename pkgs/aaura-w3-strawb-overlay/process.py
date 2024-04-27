@@ -48,6 +48,7 @@ for path in reducedPaths:
 	# Resize and save image with reduced quality
 	else:
 		img = Image.open(fp=path, formats=("JPEG", "PNG"))
+		exif = img.info["exif"]
 		
 		savePath = str(savePath).rsplit(".")[0] + "-lossier"
 		if img.format == "JPEG":
@@ -65,5 +66,6 @@ for path in reducedPaths:
 		img.save(
 			fp=savePath,
 			format=saveFormat,
-			quality=50
+			quality=50,
+			exif=exif
 		)
