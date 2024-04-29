@@ -72,7 +72,7 @@ pub const COMMON_CSP: &str = "default-src 'none'; font-src 'self'; img-src 'self
 
 struct EnvVars {
     bind_address: String,
-    bcdg_json: Option<PathBuf>,
+    bcdg_json: PathBuf,
     web_data_dir: PathBuf
 }
 
@@ -89,11 +89,12 @@ impl EnvVars {
         };
     
         let bcdg_json_key: &str = "AAURA_W3_STRAWB_BCDG_JSON_PATH";
-        let bcdg_json: Option<PathBuf> = match env::var(bcdg_json_key) {
-            Ok(p) => Some(Path::new(&p).to_owned()),
+        let bcdg_json: PathBuf = match env::var(bcdg_json_key) {
+            Ok(p) => Path::new(&p).to_owned(),
             Err(e) => {
-                eprintln!("{}: {}, it is very advisable that you set this for decent page load times", bcdg_json_key, e);
-                None
+                let path = "/var/cache/fetch-with-etag/cache";
+                eprintln!("{}: {}, using {} instead", bcdg_json_key, e, path);
+                Path::new(path).to_owned()
             }
         };
 

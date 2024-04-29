@@ -8,18 +8,14 @@ use std::{
 };
 use crate::ENV_VARS;
 
-async fn ring() -> Vec<String> {
-    // If there is no path given, get the json from the official download
-    let string_ring: String = match &ENV_VARS.bcdg_json {
-        None => reqwest::get("https://artemislena.eu/services/downloads/beCrimeDoGay.json").await.unwrap().text().await.unwrap(),
-        Some(p) => read_to_string(p).unwrap()
-    };
+fn ring() -> Vec<String> {
+    let string_ring: String = read_to_string(&ENV_VARS.bcdg_json).unwrap();
     serde_json::from_str::<Vec<String>>(&string_ring).unwrap()
 }
 
 pub async fn footer() -> Markup {
     let self_url = &(crate::BASE_URL.to_owned() + "webrings/be-crime-do-gay-webring");
-    let ring = ring().await;
+    let ring = ring();
     let self_index = ring.iter().position(|x| x == self_url).unwrap();
     let prev_url: &str;
     let next_url: &str;
