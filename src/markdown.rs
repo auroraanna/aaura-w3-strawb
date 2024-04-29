@@ -16,7 +16,6 @@ use pulldown_cmark::{
 use pulldown_cmark_frontmatter::FrontmatterExtractor;
 use maud::{
     html,
-    Markup,
     PreEscaped
 };
 use slug::slugify;
