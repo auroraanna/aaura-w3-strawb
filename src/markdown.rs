@@ -49,6 +49,8 @@ use tower_http::services::fs::{
 };
 use tower::Service;
 use axum_macros::debug_handler;
+use core::cmp::Ordering;
+use indexmap::map::IndexMap;
 
 #[derive(Debug, Clone)]
 struct MdPage {
@@ -137,10 +139,24 @@ impl MdPage {
             html: html_output
         }
     }
+
+    fn cmp(&self, other: &Self) -> Ordering {
+        let a = self.frontmatter.date_published;
+        let b = other.frontmatter.date_published;
+
+        if a < b {
+            return Ordering::Greater;
+        } else if a > b {
+            return Ordering::Less;
+        } else {
+            // a isn't smaller or greater than b so they have to be equal.
+            return Ordering::Equal;
+        }
+    }
 }
 
 pub struct MdRoot {
-    sub_dirs: HashMap<String, HashMap<String, MdPage>>,
+    sub_dirs: HashMap<String, IndexMap<String, MdPage>>,
     pages: HashMap<String, MdPage>,
     latest_date: DateTime<Utc>
 }
@@ -161,14 +177,14 @@ impl MdRoot {
             if path.is_dir() {
                 let sub_dir_name = path.file_name().unwrap();
                 dbg!(sub_dir_name);
-                let mut sub_dir_pages: HashMap<String, MdPage> = HashMap::new();
+                let mut sub_dir_pages: IndexMap<String, MdPage> = IndexMap::new();
                 for page in read_dir(&path).unwrap() {
                     let page = page.unwrap();
                     dbg!(page.path());
                     let md_page = if page.path().is_dir() {
-                        MdPage::new(&page.path().join("index.md"))          
+                        MdPage::new(&page.path().join("index.md"))
                     } else {
-                        MdPage::new(&page.path())       
+                        MdPage::new(&page.path())
                     };
                     sub_dir_pages.insert(
                         page.path().file_stem().unwrap().to_str().unwrap().to_owned(), 
@@ -184,19 +200,27 @@ impl MdRoot {
             }
         }
 
+        for (_md_dir_name, md_dir) in md_root.sub_dirs.iter_mut() {
+            md_dir.sort_by(|_page_a_key, page_a, _page_b_key, page_b| page_a.cmp(page_b));
+        }
+
         eprintln!("{}", md_root.pages.get("contact").unwrap().frontmatter.title);
         eprintln!("{}", md_root.sub_dirs.get("blog").unwrap().get("i-bought-a-thinkpad").unwrap().frontmatter.title);
         eprintln!("{}", md_root.sub_dirs.get("blog").unwrap().get("starship-velociraptor-an-amazing-album").unwrap().frontmatter.title);
 
-        let mut latest_date: DateTime<Utc> = DateTime::UNIX_EPOCH;
+        // Pick latest of each md_dir (already sorted) and sort those.
+        let mut latest_date_per_md_dir: Vec<DateTime<Utc>> = Vec::new();
         for (_md_dir_name, md_dir) in md_root.sub_dirs.iter() {
+            let mut i = 0;
             for (_md_page_name, md_page) in md_dir.iter() {
-                if md_page.frontmatter.date_published.unwrap() > latest_date {
-                    latest_date = md_page.frontmatter.date_published.unwrap();
+                i += 1;
+                if i == 1 {
+                    latest_date_per_md_dir.push(md_page.frontmatter.date_published.unwrap());
                 }
             }
         }
-        md_root.latest_date = latest_date;
+        latest_date_per_md_dir.sort();
+        md_root.latest_date = latest_date_per_md_dir[latest_date_per_md_dir.len() - 1];
 
         md_root
     }
