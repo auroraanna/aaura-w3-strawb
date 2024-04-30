@@ -32,6 +32,14 @@ in {
     comic-neue
   ]);
 
+  config.users = lib.mkIf cfg.enable {
+    groups.aaura-w3-strawb = {};
+    users.aaura-w3-strawb = {
+      group = "aaura-w3-strawb";
+      isSystemUser = true;
+    };
+  };
+
   config.systemd.services.aaura-w3-strawb = lib.mkIf cfg.enable rec {
     enable = true;
     description = "dynamic webserver for Anna Aurora's website";
@@ -48,6 +56,10 @@ in {
     });
 
     serviceConfig = {
+      User = "aaura-w3-strawb";
+      Group = "aaura-w3-strawb";
+      StateDirectory = [ "aaura-w3-strawb" ];
+
       ExecStart = "${pkgs.aaura-w3-strawb}/bin/aaura-w3-strawb";
 
       Restart = "on-failure";
@@ -55,7 +67,7 @@ in {
       # Hardening
       CapabilityBoundingSet = [ "" ];
       LockPersonality = true;
-      PrivateDevices = false;
+      PrivateDevices = true;
       PrivateUsers = true;
       ProcSubset = "pid";
       ProtectSystem = "strict";
@@ -75,15 +87,17 @@ in {
         "@system-service"
         "~@privileged @aio @chown @keyring @memlock @resources @setuid @timer memfd_create"
       ];
-      UMask = "0077";
+      # No UMask because this service doesn't create files
       RestrictSUIDSGID = true;
       RemoveIPC = true;
       NoNewPrivileges = true;
       MemoryDenyWriteExecute = true;
       NoExecPaths = [ "/" ];
       ExecPaths = [ "/nix/store" ];
+      # Needs /run/nscd
       InaccessiblePaths = [ "/sys" "/dev/shm" "/run/dbus" "/run/user" ];
-      RestrictFileSystems = [ "@basic-api" "~sysfs" ];
+      # Exits with code 244 if filesystems are restricted
+      RestrictFileSystems = [];
     };
   };
 }
