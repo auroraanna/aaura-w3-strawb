@@ -91,7 +91,6 @@ impl MdPage {
                     Some(Event::Text(text))
                 },
                 Event::Start(Tag::Image(link_type, dest_url, title)) => {
-                    dbg!(&dest_url);
                     let new_dest_url: CowStr<'_> = if dest_url.ends_with(".png") {
                         (dest_url.strip_suffix(".png").unwrap().to_owned() + "-lossier.webp").into()
                     } else if dest_url.ends_with(".jpg") {
@@ -102,7 +101,6 @@ impl MdPage {
                     Some(Event::Start(Tag::Image(link_type, new_dest_url, title)))
                 },
                 Event::Html(node) => {
-                    dbg!(&node);
                     Some(Event::Html(
                         if node.to_string() == "<myaudio>\n" {
                             inside_myaudio = true;
