@@ -47,7 +47,7 @@ for path in reducedPaths:
 		ff.run()
 	# Resize and save image with reduced quality
 	else:
-		img = Image.open(fp=path, formats=("JPEG", "PNG"))
+		img = Image.open(fp=path, formats=("JPEG", "PNG", "WEBP"))
 		
 		savePath = str(savePath).rsplit(".")[0] + "-lossier"
 		if img.format == "JPEG":

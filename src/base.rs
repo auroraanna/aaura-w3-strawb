@@ -40,8 +40,24 @@ fn nonce() -> String {
 pub struct MyFrontmatter {
     pub title: String,
     pub date_published: Option<DateTime<Utc>>,
+    pub date_published_time_precision: Option<bool>,
     pub description: Option<String>,
     pub keywords: Option<Vec<String>>
+}
+
+impl MyFrontmatter {
+    pub fn human_date_format_placeholder(&self) -> &str {
+        match &self.date_published_time_precision {
+            Some(p) => {
+                if *p {
+                    "%F %H:%M:%S%:z"
+                } else {
+                    "%F"
+                }
+            },
+            None => "%F %H:%M:%S%:z",
+        }
+    }
 }
 
 pub async fn base(frontmatter: Option<MyFrontmatter>, content: Markup) -> impl IntoResponse {
@@ -91,7 +107,9 @@ pub async fn base(frontmatter: Option<MyFrontmatter>, content: Markup) -> impl I
                                 Some(date) => {
                                     p {
                                         "Published at "
-                                        time datetime=(format!("{}", date.to_rfc3339())) { (format!("{}", date.format("%F %H:%M:%S%:z"))) }
+                                        time datetime=(format!("{}", date.to_rfc3339())) { (format!("{}", date.format(
+                                            fm.human_date_format_placeholder()
+                                        ))) }
                                     }
                                 },
                                 None => {}

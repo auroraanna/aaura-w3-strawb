@@ -120,6 +120,7 @@ async fn index() -> impl IntoResponse {
         Some(MyFrontmatter {
             title: "Index".to_string(),
             date_published: None,
+            date_published_time_precision: None,
             description: Some("The start page of Anna Aurora's website describing her person and interests.".to_string()),
             keywords: None
         }),

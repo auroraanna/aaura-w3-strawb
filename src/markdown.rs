@@ -93,6 +93,8 @@ impl MdPage {
                 Event::Start(Tag::Image(link_type, dest_url, title)) => {
                     let new_dest_url: CowStr<'_> = if dest_url.ends_with(".png") {
                         (dest_url.strip_suffix(".png").unwrap().to_owned() + "-lossier.webp").into()
+                    } else if dest_url.ends_with(".webp") {
+                        (dest_url.strip_suffix(".webp").unwrap().to_owned() + "-lossier.webp").into()
                     } else if dest_url.ends_with(".jpg") {
                         (dest_url.strip_suffix(".jpg").unwrap().to_owned() + "-lossier.jpg").into()
                     } else {
@@ -124,11 +126,11 @@ impl MdPage {
         let mut html_output = String::new();
         {
             let mut extractor = FrontmatterExtractor::new(parser);
-    
+
             let code_block = extractor.extract_buffered().unwrap().code_block.as_ref().unwrap();
             my_frontmatter = toml::from_str(&code_block.source).unwrap();
             eprintln!("Markdown page title: {}", my_frontmatter.title);
-                    
+
             pulldown_cmark::html::push_html(&mut html_output, extractor);
         }
     
@@ -301,13 +303,16 @@ pub async fn md_page_list(md_dir: &str) -> impl IntoResponse {
     base(Some(MyFrontmatter {
         title: md_dir.to_string(),
         date_published: None,
+        date_published_time_precision: None,
         description: Some(format!("A list of all posts under /{md_dir}/.")),
         keywords: None
     }), html! {
         ol .md_dir_list {
             @for (key, val) in MD_ROOT.sub_dirs.get(md_dir).unwrap().iter() {
                 li {
-                    @let formatted_date = val.frontmatter.date_published.unwrap().format("%Y-%m-%d");
+                    @let formatted_date = val.frontmatter.date_published.unwrap().format(
+                        val.frontmatter.human_date_format_placeholder()
+                    );
                     time datetime=(formatted_date) {
                         (formatted_date)
                     }

@@ -46,6 +46,7 @@ pub async fn linux_journey() -> impl IntoResponse {
         Some(MyFrontmatter {
             title: "Linux journey".to_string(),
             date_published: None,
+            date_published_time_precision: None,
             description: Some("Anna Aurora's personal timeline of Linux distributions that she's used, including information on when she started using them and for how long she used them.".to_string()),
             keywords: Some(vec![
                 "linux-distros".to_owned(),

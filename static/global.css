@@ -91,6 +91,10 @@ code {
 	font-family: "Iosevka", monospace;
 }
 
+time {
+	font-family: "Iosevka", monospace;
+}
+
 #banner {
 	width: 84px;
 }
