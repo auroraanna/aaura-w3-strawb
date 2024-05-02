@@ -9,4 +9,4 @@ description = "A cgi art piece leveling up the obama prism game to high-definiti
 
 Yes, this is a meme.
 
-Created using Blender and a high-resolution photo of Obama's face which was projected onto the sides ob the pyramid.
+Created using Blender and a high-resolution photo of Obama's face which was projected onto the sides of the pyramid.
