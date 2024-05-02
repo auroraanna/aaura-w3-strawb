@@ -13,7 +13,7 @@ rustPlatform.buildRustPackage rec {
   cargoLock.lockFile = ../Cargo.lock;
 
   nativeBuildInputs = [ pkg-config ];
-  buildInputs = [ openssl fontconfig ];
+  buildInputs = [ fontconfig ];
 
   meta = with lib; {
     description = "A webserver serving Anna Aurora's dynamic website";
