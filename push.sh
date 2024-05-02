@@ -6,4 +6,4 @@ else
 	target="root@Strawberry-Vault:/var/lib/aaura-w3-strawb/"
 fi
 
-rsync -e 'ssh -p 56019' -r --del markdown static result/ $target --progress 
+rsync -e 'ssh -p 56019' -r --copy-links --del markdown static result/ $target --progress 

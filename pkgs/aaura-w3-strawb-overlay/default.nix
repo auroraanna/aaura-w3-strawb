@@ -57,9 +57,9 @@ in stdenv.mkDerivation rec {
 
     python process.py ${markdown} $out/markdown
 
-    cp ${Lyrically-Vantage}/* $out/markdown/art/lyrically-vantage/
-    cp ${Lettuce-Synthetic}/composited/* $out/markdown/art/lettuce-synthetic/
-    cp ${video-game-nostalgia}/* $out/markdown/art/video-game-nostalgia/
+    ln -s ${Lyrically-Vantage}/* $out/markdown/art/lyrically-vantage/
+    ln -s ${Lettuce-Synthetic}/composited/* $out/markdown/art/lettuce-synthetic/
+    ln -s ${video-game-nostalgia}/* $out/markdown/art/video-game-nostalgia/
 
     runHook postInstall
   '';
