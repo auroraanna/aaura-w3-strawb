@@ -35,7 +35,7 @@ pub async fn header(nonce: &str) -> Markup {
     menu.add_entry("/art/", "Art portfolio", Some('🌠'));
     menu.add_entry("/services/", "Services", None);
     menu.add_entry("/contact/", "Contact", Some('👋'));
-    menu.add_entry("/static/find-billy", "Find Billy!", Some('🤖'));
+    menu.add_entry("/find-billy/", "Find Billy!", Some('🤖'));
     menu.add_entry("/linux-journey/", "Linux journey", Some('🐧'));
     menu.add_entry("/license/", "License", Some('©'));
     menu.add_entry("https://codeberg.org/annaaurora/aaura-w3-strawb", "Source code", Some('📦'));
