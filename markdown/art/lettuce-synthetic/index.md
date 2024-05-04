@@ -1,7 +1,7 @@
 ```toml
 atom_id_parts = { email = "anna@annaaurora.eu", object = "77" }
 title = "️🥬 Lettuce Synthetic"
-date_published =" 2023-03-09T18:58:53+01:00"
+date_published = "2023-03-09T18:58:53+01:00"
 description = "Several cgi art pieces sharing the same 3d model but varying in camera position, colors and lighting."
 keywords = ["windows-11-wallpaper-esque", "wavy-shapes", "lettuce", "folded-shapes"]
 ```
