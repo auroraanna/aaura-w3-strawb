@@ -1,4 +1,4 @@
-```
+```toml
 title = "️🥬 Lettuce Synthetic"
 date_published =" 2023-03-09T18:58:53+01:00"
 description = "Several cgi art pieces sharing the same 3d model but varying in camera position, colors and lighting."
