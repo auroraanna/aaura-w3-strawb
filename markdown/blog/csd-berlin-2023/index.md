@@ -1,4 +1,5 @@
 ```toml
+atom_id_parts = { email = "anna@annaaurora.eu", object = "c2" }
 title = "🏳️‍🌈🚶‍♀️ CSD Berlin 2023"
 date_published = "2023-08-02T01:13:32+02:00"
 description = "Anna talks about her experience at the Christopher Street Day in 2023 in Berlin."

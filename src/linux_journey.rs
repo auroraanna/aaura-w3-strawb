@@ -44,6 +44,7 @@ pub async fn linux_journey() -> impl IntoResponse {
 
     base(
         Some(MyFrontmatter {
+            atom_id_parts: None,
             title: "Linux journey".to_string(),
             date_published: None,
             date_published_time_precision: None,

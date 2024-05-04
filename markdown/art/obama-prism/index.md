@@ -1,4 +1,5 @@
 ```toml
+atom_id_parts = { email = "anna@annaaurora.eu", object = "47" }
 title = "👨🏾 Obama Prism"
 date_published = "2020-05-26T00:00:00+00:00"
 date_published_time_precision = false

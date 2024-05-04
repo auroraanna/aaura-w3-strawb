@@ -1,4 +1,5 @@
 ```toml
+atom_id_parts = { email = "anna@annaaurora.eu", object = "c6" }
 title = "NixOS 3d showcase"
 date_published = "2021-06-05T00:00:00+00:00"
 date_published_time_precision = false

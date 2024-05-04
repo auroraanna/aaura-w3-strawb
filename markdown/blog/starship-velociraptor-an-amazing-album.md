@@ -1,4 +1,5 @@
 ```toml
+atom_id_parts = { email = "anna@annaaurora.eu", object = "92" }
 title = "🪨🎸 Starship Velociraptor: an amazing album"
 date_published = "2023-04-23T20:53:19+02:00"
 description = "A review of the indie power metal album “Starship Velociraptor” by Galactikraken."

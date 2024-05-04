@@ -1,4 +1,5 @@
 ```toml
+atom_id_parts = { email = "anna@annaaurora.eu", object = "ed" }
 title = "🏙️ City block"
 date_published = "2020-05-22T00:00:00+00:00"
 date_published_time_precision = false

@@ -1,4 +1,5 @@
 ```toml
+atom_id_parts = { email = "anna@annaaurora.eu", object = "f2" }
 title = "🚗 Honda Sports EV"
 date_published = "2021-02-09T00:00:00+00:00"
 date_published_time_precision = false

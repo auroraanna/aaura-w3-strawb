@@ -28,6 +28,7 @@ use rand::{
     rngs::OsRng,
     RngCore
 };
+use serde_email::Email;
 
 fn nonce() -> String {
     let mut rng = OsRng::default();
@@ -37,7 +38,14 @@ fn nonce() -> String {
 }
 
 #[derive(Debug, Clone, Deserialize)]
+pub struct AtomIdParts {
+    pub email: Email,
+    pub object: String,
+}
+
+#[derive(Debug, Clone, Deserialize)]
 pub struct MyFrontmatter {
+    pub atom_id_parts: Option<AtomIdParts>,
     pub title: String,
     pub date_published: Option<DateTime<Utc>>,
     pub date_published_time_precision: Option<bool>,

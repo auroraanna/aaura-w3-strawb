@@ -301,6 +301,7 @@ pub async fn handle_md_media(
 
 pub async fn md_page_list(md_dir: &str) -> impl IntoResponse {
     base(Some(MyFrontmatter {
+        atom_id_parts: None,
         title: md_dir.to_string(),
         date_published: None,
         date_published_time_precision: None,
@@ -333,7 +334,6 @@ pub async fn atom_feed() -> impl IntoResponse {
             feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en" xml:base=(crate::BASE_URL) {
                 id { (crate::BASE_URL) }
                 title { "Anna Aurora" }
-                //updated { (MD_ROOT.lock().unwrap().latest_date.to_rfc3339()) }
                 updated { (MD_ROOT.latest_date.to_rfc3339()) }
                 author {
                     name { "Anna Aurora" }
@@ -349,13 +349,18 @@ pub async fn atom_feed() -> impl IntoResponse {
                 @for (md_dir_name, md_dir) in MD_ROOT.sub_dirs.iter() {
                     @for (md_page_name, md_page) in md_dir.iter() {
                         entry {
-                            @let date = md_page.frontmatter.date_published.unwrap().to_rfc3339();
+                            @let date = md_page.frontmatter.date_published.unwrap();
                             @let page_url = format!("{}{}/{}/", crate::BASE_URL, md_dir_name, md_page_name);
+                            @let atom_id_parts = md_page.frontmatter.atom_id_parts.as_ref().expect(
+                                "Markdown pages in subdirectories nee dto contain an id in their frontmatter."
+                            );
+                            // Even though the email may change, it was definitely Anna's at the date following.
+                            @let page_id = format!("tag:{},{}:{}", atom_id_parts.email, date.format("%F"), atom_id_parts.object);
 
-                            id { (page_url) }
+                            id { (page_id) }
                             title { (md_page.frontmatter.title) }
-                            published { (date) }
-                            updated { (date) }
+                            published { (date.to_rfc3339()) }
+                            updated { (date.to_rfc3339()) }
                             summary { (md_page.frontmatter.description.as_ref().expect("Markdown pages in subdirectories need to contain a description in their frontmatter.")) }
                             content type="html" src=(page_url) {}
                         }

@@ -1,4 +1,5 @@
 ```toml
+atom_id_parts = { email = "anna@annaaurora.eu", object = "3f" }
 title = "video game Nostalgia"
 date_published = "2022-05-31T21:49:20+02:00"
 keywords = ["chiptune", "music", "lmms"]

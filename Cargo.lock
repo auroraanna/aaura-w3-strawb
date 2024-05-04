@@ -21,6 +21,7 @@ dependencies = [
  "pulldown-cmark-frontmatter",
  "rand",
  "serde",
+ "serde-email",
  "serde_json",
  "slug",
  "tokio",
@@ -359,6 +360,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "330c60081dcc4c72131f8eb70510f1ac07223e5d4163db481a04a0befcffa412"
 dependencies = [
  "libloading",
+]
+
+[[package]]
+name = "email_address"
+version = "0.2.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e2153bd83ebc09db15bcbdc3e2194d901804952e3dc96967e1cd3b0c5c32d112"
+dependencies = [
+ "serde",
 ]
 
 [[package]]
@@ -1038,6 +1048,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0c9f6e76df036c77cd94996771fb40db98187f096dd0b9af39c6c6e452ba966a"
 dependencies = [
  "serde_derive",
+]
+
+[[package]]
+name = "serde-email"
+version = "3.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "df113b26f73e0d214d25c95f254c7d50b75c85b99a8a4084ac41dd38e738972a"
+dependencies = [
+ "email_address",
+ "serde",
 ]
 
 [[package]]

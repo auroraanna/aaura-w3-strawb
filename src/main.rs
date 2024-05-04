@@ -118,6 +118,7 @@ lazy_static::lazy_static! {
 async fn index() -> impl IntoResponse {
     base(
         Some(MyFrontmatter {
+            atom_id_parts: None,
             title: "Index".to_string(),
             date_published: None,
             date_published_time_precision: None,
