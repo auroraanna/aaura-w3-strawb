@@ -131,7 +131,7 @@ async fn index() -> impl IntoResponse {
             }
 
             ul .bio {
-                li { "likes programming in Rust, Javascript" }
+                li { "likes programming in Rust, Python, Javascript" }
                 li { "using NixOS and maintainer for nixpkgs" }
                 li { "certified kittyfoxgirl​, likes cuddling, will hug a Blåhaj and hide her face with it sometimes" }
                 li {
