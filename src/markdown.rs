@@ -343,7 +343,7 @@ pub async fn atom_feed() -> impl IntoResponse {
                 link rel="self" href=(crate::BASE_URL.to_owned() + "atom.xml") type="application/atom+xml" title="Atom feed for Anna Aurora's website" {}
                 link rel="related" href=(crate::BASE_URL) type="text/html" title="Anna Aurora's website" {}
                 generator uri="https://maud.lambda.xyz/" version=(MAUD_VERSION.clone()) { "Maud" }
-                icon { "static/favicon.webp" }
+                icon { "/static/favicon.png" }
                 subtitle { "The feed for pages on Anna Aurora's website containing flow text or artwork that have an associated publication date, e.g. blog entries." }
 
                 @for (md_dir_name, md_dir) in MD_ROOT.sub_dirs.iter() {
