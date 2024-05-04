@@ -1,9 +1,12 @@
 ```toml
-atom_id_parts = { email = "anna@annaaurora.eu", object = "3f" }
 title = "video game Nostalgia"
 date_published = "2022-05-31T21:49:20+02:00"
 keywords = ["chiptune", "music", "lmms"]
 description = "A small post about how Anna came to make a song in LMMS."
+
+[atom_id_parts]
+email = "anna@annaaurora.eu"
+object = "0"
 ```
 <myaudio>
 video-game-nostalgia.flac

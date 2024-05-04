@@ -1,9 +1,12 @@
 ```toml
-atom_id_parts = { email = "anna@annaaurora.eu", object = "92" }
 title = "🪨🎸 Starship Velociraptor: an amazing album"
 date_published = "2023-04-23T20:53:19+02:00"
 description = "A review of the indie power metal album “Starship Velociraptor” by Galactikraken."
 keywords = ["review", "music", "rock", "power-metal"]
+
+[atom_id_parts]
+email = "anna@annaaurora.eu"
+object = "0"
 ```
 Because I don't know what else to put on this blog and as an excuse to have another blog post, I am now reviewing music on this blog. Also, the comments on the YouTube video's of the songs are turned off, so I am instead dumping my opinion here.
 

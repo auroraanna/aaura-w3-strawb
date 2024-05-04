@@ -1,10 +1,13 @@
 ```toml
-atom_id_parts = { email = "anna@annaaurora.eu", object = "c6" }
 title = "NixOS 3d showcase"
 date_published = "2021-06-05T00:00:00+00:00"
 date_published_time_precision = false
 keywords = ["wallpaper", "NixOS", "Nix", "Nixpkgs", "cgi"]
 description = "A cgi art piece, the software and motivation for creating it."
+
+[atom_id_parts]
+email = "anna@annaaurora.eu"
+object = "0"
 ```
 ![A symbolic representation of components of the Nix experience represented by 3d icons, a 3d NixOS logo, pills and cardboard boxes. They are all arranged on top of white square platforms with round corners.](nixos-3d-showcase.webp)
 

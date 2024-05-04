@@ -1,9 +1,12 @@
 ```toml
-atom_id_parts = { email = "anna@annaaurora.eu", object = "14" }
 title = "💻️🕹️ I bought a ThinkPad."
 date_published = "2022-10-21T14:38:14+02:00"
 description = "Anna describes the experience with her new used laptop (ThinkPad T480 ) and all the great stickers she put on it."
 keywords = ["review", "thinkpad-t480", "hardware", "laptop"]
+
+[atom_id_parts]
+email = "anna@annaaurora.eu"
+object = "0"
 ```
 ## Batteries
 

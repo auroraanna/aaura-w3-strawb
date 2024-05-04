@@ -1,9 +1,12 @@
 ```toml
-atom_id_parts = { email = "anna@annaaurora.eu", object = "c2" }
 title = "🏳️‍🌈🚶‍♀️ CSD Berlin 2023"
 date_published = "2023-08-02T01:13:32+02:00"
 description = "Anna talks about her experience at the Christopher Street Day in 2023 in Berlin."
 keywords = ["csd", "berlin", "pride"]
+
+[atom_id_parts]
+email = "anna@annaaurora.eu"
+object = "0"
 ```
 Anna is way to late in writing this blog post but Anna and the [Artemis system](https://artemislena.eu) (loved ones) went to the [Christopher Street Day in Berlin](https://en.wikipedia.org/wiki/Berlin_Pride) this year, which took place on <time datetime="2023-07-22">the 22nd of July</time>, starting at <time datetime="2023-07-22T12:00:00+02:00">12:00</time>. This was Anna's first time going to any pride event. It was so awesome seeing all the other queer people. She even saw a classmate there briefly. Hundreds of thousands of people probably having been there ([Wikipedia says 700000 people attended in 2012](https://en.wikipedia.org/wiki/Berlin_Pride)), even if some of them were not from Berlin, makes it a significant portion of the population of Berlin. This makes Anna confident in herself, because there are many people like her.
 

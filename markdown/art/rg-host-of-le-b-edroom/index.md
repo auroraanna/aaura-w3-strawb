@@ -1,10 +1,13 @@
 ```toml
-atom_id_parts = { email = "anna@annaaurora.eu", object = "1a" }
 title = "🛏️ RG(host of le )B(edroom)"
 date_published = "2021-08-08T00:00:00+00:00"
 date_published_time_precision = false
 keywords = ["bedroom", "rgb-lights", "bokeh-blur", "tower-pc", "curved-monitor", "gaming", "cgi"]
 description = "A cgi art piece and the software, simulations and texures used to create it."
+
+[atom_id_parts]
+email = "anna@annaaurora.eu"
+object = "0"
 ```
 ![A cutout of a bedroom. It is placed on a carbon fiber floor. The bedroom includes a wooden bed with a green mattress, a metal in, a dark wooden floor, a desk, windows, a door, a monitor with keyboard and mouse and a PC behind a cactus. There are also rainbow (RGB) light a the top of the room. On top of the bed, there is a white blanket floating with a sphere under it. On the wall, the AK47 artwork from the portfolio is framed.](bedroom.webp)
 

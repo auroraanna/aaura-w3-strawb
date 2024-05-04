@@ -1,9 +1,12 @@
 ```toml
-atom_id_parts = { email = "anna@annaaurora.eu", object = "13" }
 title = "Lyrically Vantage"
 date_published = "2022-12-14T23:24:05+01:00"
 description = "An experimental song with a cathedral organ produced in LMMS"
 keywords = ["music", "LMMS", "cathedral-organ"]
+
+[atom_id_parts]
+email = "anna@annaaurora.eu"
+object = "0"
 ```
 
 I found this song in the list of songs I started and then I started to complete it. It also led to me making [a Nix flake](https://codeberg.org/annaaurora/Lyrically-Vantage/src/branch/main/flake.nix) to reproducibly and automatically build this song from [the LMMS file](Lyrically%20Vantage.mmpz) and the Blender cover art file.
