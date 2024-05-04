@@ -362,7 +362,8 @@ pub async fn atom_feed() -> impl IntoResponse {
                             published { (date.to_rfc3339()) }
                             updated { (date.to_rfc3339()) }
                             summary { (md_page.frontmatter.description.as_ref().expect("Markdown pages in subdirectories need to contain a description in their frontmatter.")) }
-                            content type="html" src=(page_url) {}
+                            link rel="alternate" type="html" href=(page_url) {}
+                            content type="html" { (md_page.html) }
                         }
                     }
                 }
