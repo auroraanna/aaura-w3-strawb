@@ -1,7 +1,6 @@
 { lib
 , rustPlatform
 , pkg-config
-, openssl
 , fontconfig
 }:
 
