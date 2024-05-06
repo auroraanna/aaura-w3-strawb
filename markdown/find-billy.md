@@ -6,4 +6,5 @@ A small, hard to master, 2d jump & run game Anna developed a few years ago. She 
 
 - [Play the web export](https://find-billy.annaaurora.eu/)
 - [Downloads](https://codeberg.org/annaaurora/Find-Billy/releases)
+- [Speedruns](https://codeberg.org/annaaurora/Find-Billy/src/branch/main/speedruns.md)
 - [Source code](https://codeberg.org/annaaurora/Find-Billy)
