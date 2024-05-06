@@ -7,3 +7,5 @@ Besides this website, Anna hosts a few other web services on her [netcup](https:
 They are:
 - [kaufkauflist](https://kaufkauflist.annaaurora.eu): A to-do list web app for shopping or other use cases enabling usage of one list by several users
 - [meme-bingo-web](https://bingo.annaaurora.eu): A database-less web app for creating, filling out and sharing meme bingos using a graphical user interface instead of an image editor.
+
+…and a status monitor for them all: [status.annaaurora.eu](https://status.annaaurora.eu)
