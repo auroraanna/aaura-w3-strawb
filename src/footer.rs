@@ -14,7 +14,7 @@ fn ring() -> Vec<String> {
 }
 
 pub async fn footer() -> Markup {
-    let self_url = &(crate::BASE_URL.to_owned() + "webrings/be-crime-do-gay-webring");
+    let self_url = &(crate::BASE_URL.strip_suffix("/").unwrap());
     let ring = ring();
     let self_index = ring.iter().position(|x| x == self_url).unwrap();
     let prev_url: &str;
