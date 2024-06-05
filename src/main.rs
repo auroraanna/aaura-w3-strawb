@@ -228,12 +228,12 @@ async fn main() {
         .route("/app-ads.txt", get(do_not_ads))
         .layer(ServiceBuilder::new()
             .layer(CatchPanicLayer::new())
-            .layer(middleware::from_fn(apply_etag))
             .layer(CompressionLayer::new()
                 .br(true)
                 .gzip(true)
                 .zstd(true)
             )
+            .layer(middleware::from_fn(apply_etag))
             .layer(SetResponseHeaderLayer::if_not_present(
                 CONTENT_SECURITY_POLICY,
                 HeaderValue::from_str(
