@@ -1,7 +1,8 @@
 import sys
 from pathlib import Path
 from ffmpy import FFmpeg
-from PIL import Image, features, ImageOps
+from PIL import Image, features, ImageOps, ImageCms
+import tempfile
 
 out = Path(sys.argv[2])
 
@@ -48,9 +49,24 @@ for path in reducedPaths:
 	# Resize and save image with reduced quality
 	else:
 		img = Image.open(fp=path, formats=("JPEG", "PNG", "WEBP"))
+		imgFormat = img.format
+
+		# Convert color profile to sRGB because web browsers are bad at any color profile but sRGB
+		icc = img.info.get("icc_profile")
+		if type(icc) is bytes:
+			icc_path = tempfile.mkstemp(suffix=".icc")[1]
+			with open(icc_path, "wb") as f:
+				f.write(icc)
+		else:
+			# AdobeRGB photos taken on a dedicated camera don't include the color profile data.
+			icc_path = "Compatible with Adobe RGB (1998).icc"
+		
+		srgb = ImageCms.createProfile("sRGB")
+		img = ImageCms.profileToProfile(img, icc_path, srgb, ImageCms.Intent.RELATIVE_COLORIMETRIC)
 		
 		savePath = str(savePath).rsplit(".")[0] + "-lossier"
-		if img.format == "JPEG":
+		# JPEG Photos with AdobeRGB taken on a dedicated camera are MP0 for some reason.
+		if imgFormat == "JPEG" or imgFormat == "MPO":
 			saveFormat = "JPEG"
 			savePath = savePath + ".jpg"
 		else:
@@ -70,6 +86,6 @@ for path in reducedPaths:
 		img.save(
 			fp=savePath,
 			format=saveFormat,
-			quality=50,
+			quality=60,
 		)
 		img.close()
