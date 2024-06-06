@@ -246,7 +246,7 @@ async fn main() {
             ))
             .layer(SetResponseHeaderLayer::overriding(
                 X_CONTENT_TYPE_OPTIONS,
-                HeaderValue::from_static("no-sniff")
+                HeaderValue::from_static("nosniff")
             ))
         );
 
