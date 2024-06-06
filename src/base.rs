@@ -5,7 +5,10 @@ use axum::{
     },
     body::Body
 };
-use http::header::CONTENT_SECURITY_POLICY;
+use http::header::{
+    CONTENT_TYPE,
+    CONTENT_SECURITY_POLICY
+};
 use serde::Deserialize;
 use maud::{
     html,
@@ -133,10 +136,16 @@ pub async fn base(frontmatter: Option<MyFrontmatter>, content: Markup) -> impl I
     }.into_string();
 
     (
-        AppendHeaders([(
-            CONTENT_SECURITY_POLICY,
-            format!("{} style-src 'self' 'nonce-{}';", crate::COMMON_CSP.to_owned(), nonce)
-        )]),
+        AppendHeaders([
+            (
+                CONTENT_TYPE,
+                String::from("text/html; charset=utf-8")
+            ),
+            (
+                CONTENT_SECURITY_POLICY,
+                format!("{} style-src 'self' 'nonce-{}';", crate::COMMON_CSP.to_owned(), nonce)
+            )
+        ]),
         Body::new(html)
     )
 }
