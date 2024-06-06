@@ -11,7 +11,8 @@ use http::{
     header::{
         ETAG,
         LAST_MODIFIED,
-        IF_NONE_MATCH
+        IF_NONE_MATCH,
+        CONTENT_TYPE
     },
     HeaderValue,
     StatusCode
@@ -30,7 +31,8 @@ pub async fn apply_etag(req: extract::Request, next: Next) -> impl IntoResponse 
 
     res_parts.headers.remove(LAST_MODIFIED);
 
-    if !res_parts.status.is_success() {
+    // HTML changes every request due to nonces so etags are unnescessary
+    if !res_parts.status.is_success() || res_parts.headers.get(CONTENT_TYPE).unwrap() == "text/html; charset=utf-8" {
         return (
             res_parts,
             res_body
