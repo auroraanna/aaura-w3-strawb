@@ -39,7 +39,7 @@ pub async fn footer() -> Markup {
                     a href=(next_url) { "Go right" }
                 }
             }
-            a #th50_kb_club href="https://250kb.club/annaaurora-eu" {
+            a #th50_kb_club href="https://250kb.club/annaaurora-eu/" {
                 div {
                     div {
                         span { "cute" } br; span { "member" }
