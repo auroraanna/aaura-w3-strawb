@@ -10,11 +10,17 @@ let
 in {
   options.services.aaura-w3-strawb = {
     enable = lib.mkEnableOption "The service to run Anna Auror's dynamic webserver, serving Anna's personal website.";
-    bind = lib.mkOption {
-      description = "The address, including port, to bind the webserver to.";
-      type = lib.types.nullOr lib.types.str;
-      example = "0.0.0.0:47238";
-      default = null;
+    address = lib.mkOption {
+      description = "The address without port from which to receive HTTP requests.";
+      type = lib.types.str;
+      example = "localhost";
+      default = "localhost";
+    };
+    port = lib.mkOption {
+      description = "The port for the HTTP requests.";
+      type = lib.types.nullOr lib.types.port;
+      example = 47238;
+      default = 60021;
     };
     webData = lib.mkOption {
       description = "A directory containing files served by the webserver directly or processed at a different route.";
@@ -44,10 +50,9 @@ in {
     enable = true;
     description = "dynamic webserver for Anna Aurora's website";
     wantedBy = [ "multi-user.target" ];
-    environment = {}
-    // (if cfg.bind == null then {} else {
-      AAURA_W3_STRAWB_BIND_ADDRESS = cfg.bind;
-    })
+    environment = {
+      AAURA_W3_STRAWB_BIND_ADDRESS = "${cfg.address}:${toString cfg.port}";
+    }
     // (if cfg.webData == null then {} else {
       AAURA_W3_STRAWB_WEB_DATA_DIR = toString cfg.webData;
     })
