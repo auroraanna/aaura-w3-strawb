@@ -104,6 +104,7 @@ pub async fn base(frontmatter: Option<MyFrontmatter>, content: Markup) -> impl I
                 meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5";
                 link rel="stylesheet" href="/static/global.css";
                 link rel="icon" type="image/png" sizes="36x30" href="/static/favicon.png";
+                script src="/static/local-post-date.js" {}
             }
             body {
                 (header(&nonce).await)
@@ -117,7 +118,7 @@ pub async fn base(frontmatter: Option<MyFrontmatter>, content: Markup) -> impl I
                                 Some(date) => {
                                     p {
                                         "Published at "
-                                        time datetime=(format!("{}", date.to_rfc3339())) { (format!("{}", date.format(
+                                        time class="post_date" datetime=(format!("{}", date.to_rfc3339())) { (format!("{}", date.format(
                                             fm.human_date_format_placeholder()
                                         ))) }
                                     }

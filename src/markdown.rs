@@ -314,7 +314,7 @@ pub async fn md_page_list(md_dir: &str) -> impl IntoResponse {
                     @let formatted_date = val.frontmatter.date_published.unwrap().format(
                         val.frontmatter.human_date_format_placeholder()
                     );
-                    time datetime=(formatted_date) {
+                    time class="post_date" datetime=(formatted_date) {
                         (formatted_date)
                     }
                     a href=(key.to_owned() + "/") { (val.frontmatter.title) }
