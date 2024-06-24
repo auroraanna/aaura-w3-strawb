@@ -151,8 +151,9 @@ async fn index() -> impl IntoResponse {
                 li { "interested in converting some of her devices to USB-C and designing her own hardware" }
             }
 
-            div #shark { 
+            div #center { 
                 div { "blå 🦈 🦈 haj" }
+                div { "rail girls ❤️" }
             }
         }
     ).await

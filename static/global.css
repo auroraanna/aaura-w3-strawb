@@ -355,13 +355,12 @@ ul.bio li:nth-child(6) {
 	list-style-type: "🎹 ";
 }
 
-#shark {
+#center {
 	display: flex;
-	justify-content: center;
-}
-
-#shark div {
+	align-items: center;
+	flex-direction: column;
 	font-family: "Comic Neue";
+	gap: 8pt;
 }
 
 @media (prefers-color-scheme: dark) {
