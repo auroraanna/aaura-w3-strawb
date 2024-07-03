@@ -154,6 +154,7 @@ async fn index() -> impl IntoResponse {
             div #center { 
                 div { "blå 🦈 🦈 haj" }
                 div { "rail girls ❤️" }
+                div { "🗦mew🗧" }
             }
         }
     ).await
