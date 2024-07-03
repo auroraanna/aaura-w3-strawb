@@ -53,9 +53,9 @@ use core::cmp::Ordering;
 use indexmap::map::IndexMap;
 
 #[derive(Debug, Clone)]
-struct MdPage {
-    frontmatter: MyFrontmatter,
-    html: String
+pub struct MdPage {
+    pub frontmatter: MyFrontmatter,
+    pub html: String
 }
 
 impl MdPage {
@@ -116,7 +116,7 @@ impl MdPage {
                         } else {
                             node
                         }
-                    ))
+    ))
                 },
                 _ => Some(event),
             }
@@ -156,9 +156,9 @@ impl MdPage {
 }
 
 pub struct MdRoot {
-    sub_dirs: HashMap<String, IndexMap<String, MdPage>>,
-    pages: HashMap<String, MdPage>,
-    latest_date: DateTime<Utc>
+    pub sub_dirs: HashMap<String, IndexMap<String, MdPage>>,
+    pub pages: HashMap<String, MdPage>,
+    pub latest_date: DateTime<Utc>
 }
 
 impl MdRoot {
@@ -322,52 +322,4 @@ pub async fn md_page_list(md_dir: &str) -> impl IntoResponse {
             }
         }
     }).await
-}
-
-pub async fn atom_feed() -> impl IntoResponse {
-    (
-        AppendHeaders([
-            (CONTENT_TYPE, "application/atom+xml; charset=utf8")
-        ]),
-        // html! can also be used to generate XML with this hack.
-        "<?xml version=\"1.0\" encoding=\"utf-8\"?>".to_owned() + &html! {
-            feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en" xml:base=(crate::BASE_URL) {
-                id { (crate::BASE_URL) }
-                title { "Anna Aurora" }
-                updated { (MD_ROOT.latest_date.to_rfc3339()) }
-                author {
-                    name { "Anna Aurora" }
-                    email { "anna@annaaurora.eu" }
-                    uri { (crate::BASE_URL) }
-                }
-                link rel="self" href=(crate::BASE_URL.to_owned() + "atom.xml") type="application/atom+xml" title="Atom feed for Anna Aurora's website" {}
-                link rel="related" href=(crate::BASE_URL) type="text/html" title="Anna Aurora's website" {}
-                generator uri="https://maud.lambda.xyz/" version=(MAUD_VERSION.clone()) { "Maud" }
-                icon { "/static/favicon.png" }
-                subtitle { "The feed for pages on Anna Aurora's website containing flow text or artwork that have an associated publication date, e.g. blog entries." }
-
-                @for (md_dir_name, md_dir) in MD_ROOT.sub_dirs.iter() {
-                    @for (md_page_name, md_page) in md_dir.iter() {
-                        entry {
-                            @let date = md_page.frontmatter.date_published.unwrap();
-                            @let page_url = format!("{}{}/{}/", crate::BASE_URL, md_dir_name, md_page_name);
-                            @let atom_id_parts = md_page.frontmatter.atom_id_parts.as_ref().expect(
-                                "Markdown pages in subdirectories nee dto contain an id in their frontmatter."
-                            );
-                            // Even though the email may change, it was definitely Anna's at the date following.
-                            @let page_id = format!("tag:{},{}:{}", atom_id_parts.email, date.format("%F"), atom_id_parts.object);
-
-                            id { (page_id) }
-                            title { (md_page.frontmatter.title) }
-                            published { (date.to_rfc3339()) }
-                            updated { (date.to_rfc3339()) }
-                            summary { (md_page.frontmatter.description.as_ref().expect("Markdown pages in subdirectories need to contain a description in their frontmatter.")) }
-                            link rel="alternate" type="html" href=(page_url) {}
-                            content type="html" { (md_page.html) }
-                        }
-                    }
-                }
-            }
-        }.into_string()
-    )
 }
