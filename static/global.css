@@ -16,6 +16,8 @@
 	--purple: #af75ff;
 	--pink: #ff2ef8;
 	background-color: var(--background);
+	background-image: url("/static/backgrounds/bubbles-light-seamless.webp");
+	background-size: 8rem;
 	color: var(--on_background);
 	min-width: 212px;
 }
@@ -382,5 +384,6 @@ ul.bio li:nth-child(6) {
 		--on_anchor: #a80000;
 		--purple: #b37cff;
 		--pink: #ff70fa;
+		background-image: url("/static/backgrounds/bubbles-dark-seamless.webp");
 	}
 }
