@@ -126,18 +126,26 @@ header > nav a::before {
 
 footer {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	flex-wrap: wrap;
 	gap: 3pt;
 	align-items: center;
-	justify-content: center;
 	border-top: var(--on_background);
 	border-top-style: dashed;
 	border-top-width: 2pt;
 	padding-top: 8pt;
 }
 
-footer > a {
+#badges {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 3pt;
+	align-items: center;
+	justify-content: center;
+}
+
+#badges > * {
 	height: 30px;
 }
 
@@ -237,6 +245,7 @@ footer > a {
 	font-weight: bold;
 	background: #cd214f;
 	color: white;
+	font-family: sans-serif;
 	padding-left: 4pt;
 	padding-right: 4pt;
 	display: flex;
