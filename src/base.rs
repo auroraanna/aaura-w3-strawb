@@ -100,7 +100,7 @@ pub async fn base(frontmatter: Option<MyFrontmatter>, content: Markup) -> impl I
                         title { "Anna Aurora's website" }
                     }
                 }
-                meta name="author" content="Anna Aurora";
+                meta name="author" content="Anna Aurora Kitsüne";
                 meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5";
                 link rel="stylesheet" href="/static/global.css";
                 link rel="icon" type="image/png" sizes="36x30" href="/static/favicon.png";
