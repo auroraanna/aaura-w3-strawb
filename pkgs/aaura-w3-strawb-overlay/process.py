@@ -78,9 +78,16 @@ for path in reducedPaths:
 			in_place=True
 		)
 
+		ratio = img.height // img.width
+		width = img.width // 3
+		height = img.height // 3
+		if width < 800:
+			width = 800
+			height = width * ratio
+		
 		img = img.resize((
-			img.width // 3,
-			img.height // 3
+			width,
+			height
 		))
 
 		img.save(
