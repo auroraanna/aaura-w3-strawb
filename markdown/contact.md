@@ -12,7 +12,7 @@ A good way to contact me is [matrix](https://matrix.org/). My MXID is [@annaauro
 
 ### SimpleX Chat
 
-[SimpleX Chat](https://simplex.chat/) is a pretty new messenger that fixes some problems with other privacy and security oriented messengers. You can be anonymous with it. Currently, there is just a client for Android and iOS phones and a terminal client. To contact me if you have the app installed, [open this contact link](https://simplex.chat/contact#/?v=1-4&smp=smp%3A%2F%2FUkMFNAXLXeAAe0beCa4w6X_zp18PwxSaSjY17BKUGXQ%3D%40smp12.simplex.im%2FTVkxSFRjz7UYAFIWm56Im8X2eOW1uPVA%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEAUQtIc0ba_hvANvxiFBUbAkr83NdpOoSGgPG3WGW2AnE%253D%26srv%3Die42b5weq7zdkghocs3mgxdjeuycheeqqmksntj57rmejagmg4eor5yd.onion).
+[SimpleX Chat](https://simplex.chat/) is a pretty new messenger that fixes some problems with other privacy and security oriented messengers. You can be anonymous with it. Currently, there is just a client for Android and iOS phones and a terminal client. To contact me if you have the app installed, [open this contact link](https://simplex.chat/contact#/?v=2-5&smp=smp%3A%2F%2F6iIcWT_dF2zN_w5xzZEY7HI2Prbh3ldP07YTyDexPjE%3D%40smp10.simplex.im%2FA8yjzq7FCXURRlKKHk0pSVWeawtZGgDN%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEA-KlVDK1JtuB6EpcXW-EzqrIRI250ek0fxiL7wj8TLDM%253D%26srv%3Drb2pbttocvnbrngnwziclp2f4ckjq65kebafws6g4hy22cdaiv5dwjqd.onion).
 
 ## Email
 
