@@ -42,6 +42,7 @@ pub async fn header(nonce: &str) -> Markup {
     menu.add_entry("/contact/", "Contact", Some(Before { content: '👋', hidden: true }));
     menu.add_entry("/find-billy/", "Find Billy!", Some(Before { content: '🤖', hidden: false }));
     menu.add_entry("/linux-journey/", "Linux journey", Some(Before { content: '🐧', hidden: true }));
+    menu.add_entry("https://ring.annaaurora.eu/", "ring", Some(Before { content: '🪐', hidden: false }));
     menu.add_entry("/license/", "License", Some(Before { content: '©', hidden: true }));
     menu.add_entry("https://codeberg.org/annaaurora/aaura-w3-strawb", "Source code", Some(Before { content: '📦', hidden: true }));
     menu.add_entry("/atom.xml", "Atom feed", None);
