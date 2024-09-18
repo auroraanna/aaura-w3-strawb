@@ -97,6 +97,10 @@ time {
 	font-family: "Iosevka", monospace;
 }
 
+.mono {
+	font-family: "Iosevka", monospace;
+}
+
 #banner {
 	width: 84px;
 }
@@ -184,7 +188,7 @@ footer {
 	text-decoration: none;
 	display: flex;
 	flex-direction: row;
-	font-family: monospace;
+	font-family: "Iosevka", monospace;
 	justify-content: center;
 	align-items: center;
 	width: max-content;
@@ -339,7 +343,7 @@ rt {
 }
 
 .bio {
-	font-family: monospace;
+	font-family: "Iosevka", monospace;
 	font-size: 1rem;
 }
 
