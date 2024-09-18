@@ -2,6 +2,8 @@
 title = "Contact"
 ```
 
+<strong>To anonymously, urgently and confidentially disclose security vulnerabilities in my services, send a message to <span class="mono">https://ntfy.annaaurora.eu/security-vuln</span> <a href="https://ntfy.annaaurora.eu/docs/publish/">like this</a>.</strong>
+
 ## end-to-end encrypted by default
 
 These contact options are generally preferred for private conversations because they make end-to-end encryption convenient. For the other private contact options that are not end-to-end encrypted by default, if you don't want service providers to be able to read the messages, encrypt to [my public PGP key](#pgp-key) or [my public age key](#age-key). age might be preferred for convenience and simplicity.
