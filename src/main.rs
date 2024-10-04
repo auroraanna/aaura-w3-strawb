@@ -68,7 +68,7 @@ use axum_macros::debug_handler;
 use etag::apply_etag;
 
 pub const BASE_URL: &str = "https://annaaurora.eu/";
-pub const COMMON_CSP: &str = "default-src 'none'; font-src 'self'; img-src 'self'; media-src 'self'; script-src 'self'; base-uri 'self'; form-action 'none';";
+pub const COMMON_CSP: &str = "default-src 'none'; font-src 'self'; img-src 'self'; media-src 'self'; script-src 'self'; base-uri 'self'; form-action 'none'; frame-ancestors 'none';";
 
 struct EnvVars {
     bind_address: String,
