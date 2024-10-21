@@ -1,7 +1,7 @@
 ```toml
 title = "License"
 ```
-By default everything on this website, excluding websites hosted on subdomains, is licensed under the [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode) with attribution to Anna Aurora Neugebauer. [A human-readable summary of the license](https://creativecommons.org/licenses/by-sa/4.0/).
+By default everything on this website, excluding websites hosted on subdomains, is licensed under the [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode) with attribution to Anna Aurora Kitsüne. [A human-readable summary of the license](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ## Exceptions
 
