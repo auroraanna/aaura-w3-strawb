@@ -8,6 +8,12 @@ title = "Contact"
 
 These contact options are generally preferred for private conversations because they make end-to-end encryption convenient and use modern cryptography.
 
+### Signal
+
+Signal is a well-known instant messenger with state of the art cryptography including post quantum computer encryption. It does not suffer from "unable to decrypt" problems like matrix. Currently however, it is centralized though at least messages are only stored on end user devices.
+
+Faes username is `annaaurora.83`.
+
 ### matrix
 
 A good way to contact me is [matrix](https://matrix.org/). My MXID is [@annaaurora:artemislena.eu](https://matrix.to/#/@annaaurora:artemislena.eu). If you don't have an account yet, please don't register on matrix.org. It defeats the decentralization. Instead, have a look at [this list e.g.](https://github.com/techlore/faq-bot/blob/6c257e35c9033de7222be16528f3ab39a466b56a/faq.json#L10) or use the matrix server of someone you know. I'm sure there's many more nice homeservers out there.
