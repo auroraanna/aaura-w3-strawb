@@ -6,7 +6,7 @@ title = "Contact"
 
 ## end-to-end encrypted by default
 
-These contact options are generally preferred for private conversations because they make end-to-end encryption convenient. For the other private contact options that are not end-to-end encrypted by default, if you don't want service providers to be able to read the messages, encrypt to [my public PGP key](#pgp-key) or [my public age key](#age-key). age might be preferred for convenience and simplicity.
+These contact options are generally preferred for private conversations because they make end-to-end encryption convenient and use modern cryptography.
 
 ### matrix
 
@@ -14,11 +14,21 @@ A good way to contact me is [matrix](https://matrix.org/). My MXID is [@annaauro
 
 ### SimpleX Chat
 
-[SimpleX Chat](https://simplex.chat/) is a pretty new messenger that fixes some problems with other privacy and security oriented messengers. You can be anonymous with it. Currently, there is just a client for Android and iOS phones and a terminal client. To contact me if you have the app installed, [open this contact link](https://simplex.chat/contact#/?v=2-5&smp=smp%3A%2F%2F6iIcWT_dF2zN_w5xzZEY7HI2Prbh3ldP07YTyDexPjE%3D%40smp10.simplex.im%2FA8yjzq7FCXURRlKKHk0pSVWeawtZGgDN%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEA-KlVDK1JtuB6EpcXW-EzqrIRI250ek0fxiL7wj8TLDM%253D%26srv%3Drb2pbttocvnbrngnwziclp2f4ckjq65kebafws6g4hy22cdaiv5dwjqd.onion).
+[SimpleX Chat](https://simplex.chat/) is a pretty new messenger that fixes some problems with other privacy and security oriented messengers. You can be anonymous with it. To contact me if you have the app installed, [open this contact link](https://simplex.chat/contact#/?v=2-5&smp=smp%3A%2F%2F6iIcWT_dF2zN_w5xzZEY7HI2Prbh3ldP07YTyDexPjE%3D%40smp10.simplex.im%2FA8yjzq7FCXURRlKKHk0pSVWeawtZGgDN%23%2F%3Fv%3D1-2%26dh%3DMCowBQYDK2VuAyEA-KlVDK1JtuB6EpcXW-EzqrIRI250ek0fxiL7wj8TLDM%253D%26srv%3Drb2pbttocvnbrngnwziclp2f4ckjq65kebafws6g4hy22cdaiv5dwjqd.onion).
+
+## ntfy
+
+Fae can be sent messages via HTTP POST on <https://ntfy.annaaurora/annaaurora>. The body is the message and the content of the header `Title` is the message title. For more documentation, see the [ntfy documentation](https://docs.ntfy.sh/publish/).
+
+However, **fae cannot answer you**. You could however, send information on how to contact you on some other messaging service.
+
+TLS ensures transport confidentiality but on the server, messages are not encrypted. Fae does not see this as a problem since fae is the only being able to read them unless the police forces netcup, the hosting provider for Strawberry-Vault on which ntfy runs, to hand over access to the storage. If you are worried about this, you can send encrypted messages by encrypting to [my age public key](#age-key)
 
 ## Email
 
-I can be reached via Email at <a href="mailto:anna@annaaurora.eu">anna@annaaurora.eu</a>.
+Email is unencrypted by default. If you don't want service providers to be able to read the messages, don't contact fae by email. [Please don't send fae PGP encrypted emails](https://www.latacora.com/blog/2019/07/16/the-pgp-problem/), see it as a last resort.
+
+Faes email address is <a href="mailto:anna@annaaurora.eu">anna@annaaurora.eu</a>.
 
 ## Report issues with this website
 
@@ -26,7 +36,7 @@ You can publicly report issues with this website in [it's source code repository
 
 ## Keyoxide
 
-You cannot directly contact me over [my Keyoxide profile](https://keyoxide.org/E71487CE9FA30D35ED9668A6B1BDDD56BCE7CD72). However, it is useful in discovering other accounts of me and cryptographically proving that I own them.
+You cannot directly contact me over [my Keyoxide profile](https://keyoxide.org/E71487CE9FA30D35ED9668A6B1BDDD56BCE7CD72). However, it is useful in discovering other accounts of me and cryptographically proving that I own them though it is all based on PGP, [which is bad](https://www.latacora.com/blog/2019/07/16/the-pgp-problem/).
 
 ## PGP key
 
@@ -50,7 +60,7 @@ My public age key is `age186mu24g0c8zra279gd44va43hacmwy94wdt69dvlhpp9y5lryddslk
 
 ## Fediverse
 
-The Fediverse is a federation of servers for social networking and microblogging. <a rel="me" href="https://pony.social/@annaaurora">I have an account on a Mastodon server</a> and post about random and gay stuff happening in my life.
+The Fediverse is a federation of servers for social networking, shitposts and microblogging. <a rel="me" href="https://pony.social/@annaaurora">I have an account on a Mastodon server</a> and post about random and gay stuff happening in my life.
 
 ## Reddit
 
