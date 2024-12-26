@@ -125,7 +125,16 @@ async fn index() -> impl IntoResponse {
             description: Some("The start page of Anna Aurora's website describing her person and interests.".to_string()),
             keywords: None
         }),
-        html! { 
+        html! {
+            p {
+                "Anna Aurora's third person pronouns: "
+                a href="https://pronouns.within.lgbt/it/it/its/its/itself" { "it/it" }
+                ", "
+                a href="https://pronouns.within.lgbt/fae/fae/faes/faes/faeself" { "fae/fae/faes/faes/faeself" }
+                ", "
+                a href="https://pronouns.within.lgbt/she/her/her/hers/herself" { "she/her" }
+            }
+
             div #portrait {
                 img src="/static/portrait-srgb-lossier-downscaled.jpg" alt="A photo of showing Anna Aurora outdoors from the top to her sholders. She is wearing fox ears, a choker and a grey tshirt. She is holding her right hand up to her shoulder in joy. She has her eyes closed and is smiling. The background contains the sky, mossy walls and trees.";
             }
