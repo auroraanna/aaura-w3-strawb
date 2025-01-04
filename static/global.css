@@ -130,6 +130,13 @@ header > nav a::before {
 	content: var(--before);
 }
 
+header > nav a img {
+	height: 2.5ch;
+	width: auto;
+	display: inline;
+	vertical-align: middle;
+}
+
 footer {
 	display: flex;
 	flex-direction: column;
