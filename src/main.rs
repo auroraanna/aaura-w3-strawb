@@ -122,7 +122,7 @@ async fn index() -> impl IntoResponse {
             title: "Index".to_string(),
             date_published: None,
             date_published_time_precision: None,
-            description: Some("The start page of Anna Aurora's website describing her person and interests.".to_string()),
+            description: Some("The start page of the personal website of Anna Aurora Kitsüne describing faes person and interests.".to_string()),
             keywords: None
         }),
         html! {
