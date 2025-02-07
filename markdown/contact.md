@@ -6,7 +6,13 @@ title = "Contact"
 
 ## end-to-end encrypted by default
 
-These contact options are generally preferred for private conversations because they make end-to-end encryption convenient and use modern cryptography.
+These contact options are generally preferred for private conversations because they make end-to-end encryption convenient and use modern cryptography. Unfortunately, I am not aware of any instant messenger that doesn't compromise on either one of
+
+- federation and decentralization
+- open source
+- clients for both android and desktop linux without electron
+- anonymity
+- identities across servers
 
 ### Signal
 
@@ -16,7 +22,7 @@ Faes username is `annaaurora.83`.
 
 ### matrix
 
-A good way to contact me is [matrix](https://matrix.org/). My MXID is [@annaaurora:artemislena.eu](https://matrix.to/#/@annaaurora:artemislena.eu). If you don't have an account yet, please don't register on matrix.org. It defeats the decentralization. Instead, have a look at [this list e.g.](https://github.com/techlore/faq-bot/blob/6c257e35c9033de7222be16528f3ab39a466b56a/faq.json#L10) or use the matrix server of someone you know. I'm sure there's many more nice homeservers out there.
+A good way to contact me is through [matrix](https://matrix.org/). It is a federated instant messenger (simplification). For best chances of me responding, invite both [@annaaurora:artemislena.eu](https://matrix.to/#/@annaaurora:artemislena.eu) and [@anna:annaaurora.eu](https://matrix.to/#/@anna:annaaurora.eu) into a room (chat) because either ones homeserver might be down. If you don't have an account yet, please don't register on matrix.org. It defeats the decentralization. Instead, have a look at [this list e.g.](https://github.com/techlore/faq-bot/blob/6c257e35c9033de7222be16528f3ab39a466b56a/faq.json#L10) or use the matrix server of someone you know. I'm sure there's many more nice homeservers out there.
 
 ### SimpleX Chat
 
