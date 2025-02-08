@@ -100,6 +100,19 @@
         "type": "github"
       }
     },
+    "neofox": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1688083200,
+        "narHash": "sha256-FSTVYP/Bt25JfLr/Ny1g9oI9aAvAYLYhct31j3XRXYc=",
+        "type": "tarball",
+        "url": "https://volpeon.ink/emojis/neofox/neofox.zip"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://volpeon.ink/emojis/neofox/neofox.zip"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1717196966,
@@ -151,6 +164,7 @@
         "Lyrically-Vantage": "Lyrically-Vantage",
         "crane": "crane",
         "flake-utils": "flake-utils_3",
+        "neofox": "neofox",
         "nixpkgs": "nixpkgs_3"
       }
     },

@@ -8,6 +8,8 @@ pub async fn header(nonce: &str) -> Markup {
         header {
             img #banner src="/static/banner-text-to-path.svg" alt="The name “Anna Aurora” in the font Comic Neue, a font looking similar to Comic Sans. “Anna” rotated 2° counter-clockwise and is placed over “Aurora” which is rotated by 2° clockwise. Both words are colored in the same gradient, starting with a light purple at the top left and ending in a light pink at the bottom right.";
             nav {
+                // Some of these don't have alt text on purpose because there would be no
+                // additional context added for what the content of the linked page is.
                 a href="/" {
                     picture {
                         source srcset="/static/neofox_home.webp";
@@ -27,8 +29,8 @@ pub async fn header(nonce: &str) -> Markup {
                 }
                 a href="/contact/" {
                     picture {
-                        source srcset="/static/neofox_wink.webp";
-                        img src="/static/neofox_wink.png" alt="";
+                        source srcset="/static/neofox/neofox_wink.avif";
+                        img src="/static/neofox/neofox_wink.png" alt="";
                     }
                     "Contact"
                 }

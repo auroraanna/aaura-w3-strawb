@@ -385,6 +385,13 @@ ul.bio li:nth-child(6) {
 	gap: 8pt;
 }
 
+.emote {
+	height: 2.5ch;
+	width: auto;
+	display: inline;
+	vertical-align: middle;
+}
+
 @media (prefers-color-scheme: dark) {
 	:root {
 		color-scheme: dark;

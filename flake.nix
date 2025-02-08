@@ -7,9 +7,13 @@
     crane.url = "github:ipetkov/crane";
     Lyrically-Vantage.url = "https://codeberg.org/annaaurora/Lyrically-Vantage/archive/main.tar.gz";
     Lettuce-Synthetic.url = "https://codeberg.org/annaaurora/Lettuce-Synthetic/archive/main.tar.gz";
+    neofox = {
+      url = "https://volpeon.ink/emojis/neofox/neofox.zip";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, flake-utils, crane, Lyrically-Vantage, Lettuce-Synthetic }:
+  outputs = { self, nixpkgs, flake-utils, crane, Lyrically-Vantage, Lettuce-Synthetic, neofox }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
@@ -19,6 +23,7 @@
         packages.aaura-w3-strawb-overlay = pkgs.callPackage ./pkgs/aaura-w3-strawb-overlay {
           Lyrically-Vantage = Lyrically-Vantage.packages.${system}.default;
           Lettuce-Synthetic = Lettuce-Synthetic.packages.${system}.default;
+          inherit neofox;
         };
         packages.default = self.packages.${system}.aaura-w3-strawb;
 

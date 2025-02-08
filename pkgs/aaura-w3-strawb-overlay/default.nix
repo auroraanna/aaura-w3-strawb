@@ -7,6 +7,7 @@
 , oxipng
 , Lyrically-Vantage
 , Lettuce-Synthetic
+, neofox
 }:
 
 let
@@ -35,7 +36,39 @@ let
       ln -s ${video-game-nostalgia}/video-game-nostalgia.flac $out/art/video-game-nostalgia/
     '';
   };
+  neofox-64x64-png = stdenv.mkDerivation {
+    name = "neofox-optimized";
+    src = neofox;
+    nativeBuildInputs = [ imagemagick oxipng ];
+    buildPhase = ''
+      mkdir optimized
 
+      for emote in ${neofox}/*.png; do
+        magick "$emote" -resize 64x64 optimized/"$(basename "$emote")"
+        oxipng --opt max -Z --strip safe optimized/"$(basename "$emote")"
+      done
+    '';
+    installPhase = ''
+      mkdir $out
+      mv optimized/* $out/
+    '';
+  };
+  neofox-64x64-avif = stdenv.mkDerivation {
+    name = "neofox-avif";
+    src = neofox;
+    nativeBuildInputs = [ imagemagick ];
+    buildPhase = ''
+      mkdir optimized
+
+      for emote in ${neofox}/*.png; do
+        magick "$emote" -resize 64x64 -quality 30 optimized/"$(basename "$emote" .png)".avif
+      done
+    '';
+    installPhase = ''
+      mkdir $out
+      mv optimized/* $out/
+    '';
+  };
 in stdenv.mkDerivation rec {
   name = "aaura-w3-strawb-overlay";
 
@@ -54,6 +87,11 @@ in stdenv.mkDerivation rec {
     mkdir -p $out/static
     convert ${static-src}/favicon.png -scale 36x30 $out/static/favicon.png
     oxipng --opt max -Z --strip safe $out/static/favicon.png
+
+    mkdir -p $out/static/neofox
+    for emote in ${neofox-64x64-png}/* ${neofox-64x64-avif}/*; do
+      ln -s "$emote" $out/static/neofox/"$(basename "$emote")"
+    done
 
     python process.py ${markdown} $out/markdown
 
