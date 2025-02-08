@@ -34,6 +34,21 @@
         "url": "https://codeberg.org/annaaurora/Lyrically-Vantage/archive/main.tar.gz"
       }
     },
+    "crane": {
+      "locked": {
+        "lastModified": 1738652123,
+        "narHash": "sha256-zdZek5FXK/k95J0vnLF0AMnYuZl4AjARq83blKuJBYY=",
+        "owner": "ipetkov",
+        "repo": "crane",
+        "rev": "c7e015a5fcefb070778c7d91734768680188a9cd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ipetkov",
+        "repo": "crane",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -134,6 +149,7 @@
       "inputs": {
         "Lettuce-Synthetic": "Lettuce-Synthetic",
         "Lyrically-Vantage": "Lyrically-Vantage",
+        "crane": "crane",
         "flake-utils": "flake-utils_3",
         "nixpkgs": "nixpkgs_3"
       }

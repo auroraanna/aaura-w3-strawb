@@ -1,15 +1,13 @@
 { lib
-, rustPlatform
+, craneLib
 , pkg-config
 , fontconfig
 }:
 
-rustPlatform.buildRustPackage rec {
+craneLib.buildPackage {
   name = "aaura-w3-strawb";
 
-  src = ../.;
-
-  cargoLock.lockFile = ../Cargo.lock;
+  src = craneLib.cleanCargoSource ../.;
 
   nativeBuildInputs = [ pkg-config ];
   buildInputs = [ fontconfig ];
