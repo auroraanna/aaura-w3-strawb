@@ -170,23 +170,23 @@ footer {
 	font-family: "Comic Neue";
 }
 
-#be_crime_do_gay span, #be_crime_do_gay a {
+#be_crime_do_gay > * {
 	background-color: var(--background);
 	padding: 1pt;
 }
 
-#be_crime_do_gay > nav {
+#be_crime_do_gay nav {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 }
 
-#be_crime_do_gay > nav > a:nth-child(1)::before {
+#be_crime_do_gay nav > a:nth-child(1)::before {
 	content: '←';
 	padding-right: 1pt;
 }
 
-#be_crime_do_gay > nav > a:nth-child(2)::after {
+#be_crime_do_gay nav > a:nth-child(2)::after {
 	content: '→';
 	padding-left: 1pt;
 }

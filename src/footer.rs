@@ -34,10 +34,12 @@ pub async fn footer() -> Markup {
         footer {
             div #badges {
                 div #be_crime_do_gay {
-                    span { "💸🔥 🏳️‍🌈 Be crime do gay webring" }
-                    nav {
-                        a href=(prev_url) { "Go left" }
-                        a href=(next_url) { "Go right" }
+                    div {
+                        span { "💸🔥 🏳️‍🌈 Be crime do gay webring" }
+                        nav {
+                            a href=(prev_url) { "Go left" }
+                            a href=(next_url) { "Go right" }
+                        }
                     }
                 }
                 a #th50_kb_club href="https://250kb.club/annaaurora-eu/" {
